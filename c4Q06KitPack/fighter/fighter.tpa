@@ -1,0 +1,28 @@
+DEFINE_ACTION_FUNCTION fighter BEGIN
+
+	OUTER_TEXT_SPRINT Q06A ~%mod_root%/fighter~
+	OUTER_TEXT_SPRINT EFFECTS ~%Q06A%/eff~
+	OUTER_TEXT_SPRINT ITEMS ~%Q06A%/itm~
+	OUTER_TEXT_SPRINT SCRIPTS ~%Q06A%/baf~
+	OUTER_TEXT_SPRINT SPELLS ~%Q06A%/spl~
+
+	OUTER_TEXT_SPRINT workspace ~%workspace%/fighter~
+	
+	COPY ~%Q06A%/2da~ override
+	COPY ~%Q06A%/bam~ override
+	COPY ~%EFFECTS%/copy~ override
+	COPY ~%SPELLS%/copy~ override
+
+	// addkit
+	LAF run STR_VAR file=add_kit file_loc=~fighter/lib~ tra=fighter_kit END
+
+	// 技能
+	LAF run STR_VAR file=skills file_loc=~fighter/lib~ tra=fighter_resource END
+
+	// 姿态
+	LAF run STR_VAR file=styles file_loc=~fighter/lib~ tra=fighter_resource END
+	
+	// 高阶
+	LAF run STR_VAR file=hla file_loc=~fighter/lib~ tra=fighter_resource END
+
+END

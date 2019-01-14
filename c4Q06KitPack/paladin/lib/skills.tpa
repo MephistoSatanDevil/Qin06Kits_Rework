@@ -1,0 +1,178 @@
+
+DEFINE_ACTION_FUNCTION skills BEGIN
+
+	//圣盾术
+	COPY ~%SPELLS%/c4QB11.spl~ override
+		SAY 0x08 @11
+		SAY 0x50 @12
+
+	ACTION_FOR_EACH file IN spcl152 spcl321 spwi108 spwi210 sppr108 sppr403 sppr409 BEGIN	
+		COPY_EXISTING - ~%file%.spl~ override
+			FOR (i=2;i<51;i+=1) BEGIN
+				LPF DELETE_SPELL_HEADER INT_VAR header_type=~-1~ min_level=i END
+			END
+			GET_OFFSET_ARRAY2 effect 0x72 SPL_V10_HEAD_EFFECTS 
+			PHP_EACH effect AS int => offset BEGIN
+				PATCH_FOR_EACH target IN 101 163 169 328 282 267 233 206 296 BEGIN
+					READ_SHORT offset opcode
+					PATCH_IF opcode = target BEGIN
+						READ_LONG offset+0x4 parameter1
+						READ_LONG offset+0x8 parameter2
+						READ_LONG offset+0x2c special
+						READ_ASCII offset+0x14 resource
+						INNER_ACTION BEGIN
+							COPY_EXISTING c4QB11.spl override
+								LPF DELETE_EFFECT
+									INT_VAR
+										match_opcode=opcode
+										match_parameter1=parameter1
+										match_parameter2=parameter2
+										match_special=special
+									STR_VAR
+										match_resource=resource
+								END
+								LPF CLONE_EFFECT
+									INT_VAR
+										match_opcode=142
+										opcode parameter1 parameter2 special
+									STR_VAR
+										resource
+								END
+						END
+					END
+				END
+			END
+	END
+
+	//保护之手
+	COPY ~%SPELLS%/c4QB12.spl~ override
+		SAY 0x08 @13
+		SAY 0x50 @14
+
+	//审判
+	COPY ~%SPELLS%/c4QB13.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=206 parameter1= RESOLVE_STR_REF (@20) END
+		SAY 0x08 @15
+		SAY 0x50 @16
+
+	//正义审判
+	COPY ~%SPELLS%/c4QB13A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=4	level_multiplier=2  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=1 multi_dicenumber=1 END
+		SAY 0x08 @17
+
+	//光明审判
+	COPY ~%SPELLS%/c4QB13B.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=2	level_multiplier=1  END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET damage = min_level/2
+			SET save = 0 - (min_level/5) - 1
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				PATCH_IF opcode=12 BEGIN
+					WRITE_LONG offset+0x1c damage
+				END
+				PATCH_IF opcode=325 BEGIN
+					WRITE_LONG offset+0x4 save
+				END
+			END
+		END
+		SAY 0x08 @18
+
+	//智慧审判
+	COPY ~%SPELLS%/c4QB13C.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=4	level_multiplier=2  END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET damage = min_level/2
+			SET luck = 0 - (min_level/5) - 1
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				PATCH_IF opcode=12 BEGIN
+					WRITE_LONG offset+0x1c damage
+				END
+				PATCH_IF opcode=22 BEGIN
+					WRITE_LONG offset+0x4 luck
+				END
+			END
+		END
+		SAY 0x08 @19
+
+	//神圣风暴
+	COPY ~%SPELLS%/c4QB14.spl~ override
+		SAY 0x08 @21
+		SAY 0x50 @22
+
+	COPY ~%SPELLS%/c4QB14A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=9 level_multiplier=1  END
+		PATCH_FOR_EACH match_opcode IN 1 142 317 73 BEGIN
+			LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode duration=48 multi_duration=6 END
+		END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			PATCH_IF min_level>12 BEGIN
+				GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+				PHP_EACH effect AS int => offset BEGIN
+					READ_SHORT offset opcode
+					PATCH_IF opcode=1 BEGIN
+						WRITE_LONG offset+0x4 1
+					END
+					PATCH_IF opcode=73 BEGIN
+						WRITE_LONG offset+0x4 ~-10~
+					END
+					PATCH_IF opcode=317 BEGIN
+						WRITE_LONG offset+0x8 1
+					END
+				END
+			END
+		END
+
+	COPY ~%SPELLS%/c4QB14B.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=9 level_multiplier=1  END
+		PATCH_FOR_EACH match_opcode IN 18 284 285 BEGIN
+			LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode duration=48 multi_duration=6 END
+		END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET damage = (min_level=1) ? 4 : (min_level/2)
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				PATCH_IF opcode=12 BEGIN
+					WRITE_LONG offset+0x1c damage
+				END
+				PATCH_IF min_level>12 BEGIN
+					PATCH_IF opcode=17 BEGIN
+						WRITE_LONG offset+0x4 20
+						WRITE_LONG offset+0x1c 2
+					END
+					PATCH_IF opcode=284 || opcode=285 BEGIN
+						WRITE_LONG offset+0x4 2
+					END
+				END
+			END
+		END
+		
+	//鞋子
+	COPY ~%ITEMS%/c4QBBOOT.itm~ override
+		SAY 0x08 @101
+		SAY 0x0c @101
+		SAY 0x50 @102
+		SAY 0x54 @102
+		
+	//生物
+	COPY ~%CREATURES%/c4QBBOOT.cre~ override
+		SAY 0x08 @103
+		SAY 0x0c @103
+		
+	//对话
+	COMPILE ~%CREATURES%/c4QBBOOT.d~
+
+END

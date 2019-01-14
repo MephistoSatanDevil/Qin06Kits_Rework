@@ -1,0 +1,171 @@
+
+DEFINE_ACTION_FUNCTION symbol BEGIN
+	
+	//禁APR武器, 远程惩罚
+	LAF CREATE_EFFECT INT_VAR opcode=362 target=1 timing=0 duration=600 parameter1=18 STR_VAR name=c4QBNoRW END
+	
+	COPY ~%ITEMS%/c4QBM0.itm~ ~%workspace%~
+		LPF ADD_ITEM_EQEFFECT INT_VAR opcode=249 target=1 timing=2 STR_VAR resource=c4QBNoRW END
+		PATCH_FOR_EACH type IN 15 18 24 27 BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=249 opcode=181 parameter1=type parameter2=0 special= RESOLVE_STR_REF (@1) END
+		END
+		INNER_ACTION BEGIN
+			COPY_EXISTING_REGEXP - GLOB ~.*\.itm~ override
+				SET APR=0
+				GET_OFFSET_ARRAY effect ITM_V10_GEN_EFFECTS
+				PHP_EACH effect AS int => offset BEGIN
+					READ_SHORT offset opcode
+					READ_LONG offset+4 param1
+					READ_LONG offset+8 param2
+					PATCH_IF opcode=1 && ((param1>0 && param2=0) || (param1>1 && param2=1)) BEGIN
+						SET APR=1
+					END
+				END
+				PATCH_IF APR BEGIN
+					GET_OFFSET_ARRAY headers ITM_V10_HEADERS
+					PHP_EACH headers AS int => index BEGIN
+						READ_BYTE index type
+						PATCH_IF type=1 BEGIN
+							SET $APR_WEAPON(~%SOURCE_RES%~)=1
+						END
+					END
+				END
+		END
+		PHP_EACH APR_WEAPON AS item => int BEGIN
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=180 target=1 timing=2 parameter1= RESOLVE_STR_REF (@0)  STR_VAR resource=~%item%~ END
+		END
+		
+	//防加速
+	COPY ~%workspace%/c4QBM0.itm~ ~%workspace%/c4QBM0.itm~
+		LPF ADD_ITEM_EQEFFECT INT_VAR opcode=101 target=1 timing=2 parameter2=16 END
+		PHP_EACH haste_spl AS file => int BEGIN
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=206 target=1 timing=2 parameter1=4742 STR_VAR resource=~%file%~ END
+		END
+		PHP_EACH haste_string AS parameter1 => int BEGIN
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=267 target=1 timing=2 parameter1 END
+		END
+		PHP_EACH haste_icon AS parameter2 => int BEGIN
+			LPF ADD_ITEM_EQEFFECT INT_VAR opcode=169 target=1 timing=2 parameter2 END
+		END
+
+	//戒指
+	OUTER_FOR (i=0;i<4;++i) BEGIN
+	
+		ACTION_IF i>0 BEGIN
+			OUTER_SET name= i+33
+			OUTER_SET name= RESOLVE_STR_REF ((AT name))
+
+			//小图标
+			LAF cd_new_portrait_icon INT_VAR string=name STR_VAR bam_file=c4QBSymb RET header_icon=icon END
+		END
+
+		COPY ~%workspace%/c4QBM0.itm~ ~override/c4QBM%i%.itm~
+			PATCH_IF i=0 BEGIN
+				LPF DELETE_ITEM_EQEFFECT END
+			END
+			LPF ADD_ITEM_HEADER INT_VAR target=5 STR_VAR icon=IPHABLAD name=~@34~ RET h1=new_header END
+			LPF ADD_ITEM_HEADER INT_VAR target=5 STR_VAR icon=IFLAMS01 name=~@35~ RET h2=new_header END
+			LPF ADD_ITEM_HEADER INT_VAR target=5 STR_VAR icon=ISHAM01 name=~@36~ RET h3=new_header END
+			FOR (j=1;j<4;++j) BEGIN
+				LPF ADD_ITEM_EFFECT INT_VAR header=~h%j%~ opcode=143 target=2 timing=1 parameter1=7 STR_VAR resource=~c4QBM%j%~ END
+			END
+			LPF ADD_ITEM_EFFECT INT_VAR opcode=215 target=2 timing=0 duration=2 parameter2=1 STR_VAR resource=SPCHMPSI END
+			PATCH_IF i=0 BEGIN
+				SAY 0x08 @31
+				SAY 0x0c @31
+				SAY 0x50 @32
+				SAY 0x54 @32
+			END ELSE BEGIN
+				LPF ADD_ITEM_EQEFFECT INT_VAR opcode=272 target=1 timing=2 parameter1=1 parameter2=3 STR_VAR resource=~c4QBM%i%0~ END
+				LPF ADD_ITEM_EQEFFECT INT_VAR opcode=142 target=2 timing=2 parameter2=header_icon END
+				FOR (j=1;j<4;++j) BEGIN
+					SET name= i+33
+					SET name= RESOLVE_STR_REF ((AT name))
+					WRITE_LONG 0x08 name
+					WRITE_LONG 0x0c name
+					SAY 0x50 @33
+					SAY 0x54 @33
+				END
+			END
+			
+	END
+	
+	//重复生效效果
+	OUTER_FOR (i=1;i<4;++i) BEGIN
+		LAF CREATE_EFFECT INT_VAR opcode=146 target=2 duration=1 parameter2=1 STR_VAR resource=~c4QBM%i%0~ name=~c4QBM%i%0~ END
+	END
+	
+	//正义圣印
+	COPY ~%SPELLS%/c4QBM1A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=5	level_multiplier=5  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=2 multi_parameter1=1 END
+	
+	//光明圣印
+	COPY ~%SPELLS%/c4QBM2A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=5	level_multiplier=5  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 parameter1=3 multi_parameter1=3 END
+	
+	//智慧圣印
+	COPY ~%SPELLS%/c4QBM3A.spl~ override
+		
+	//防叠加, 切换移除
+	COPY_EXISTING_REGEXP GLOB ~c4QBM[123]0.spl~ override
+		FOR (i=1;i<4;++i) BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=321 target=1 STR_VAR resource=~c4QBM%i%0~ END
+		END
+		LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=321 target=1 STR_VAR resource=~c4QBM1X~ END
+		LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=321 target=1 STR_VAR resource=~c4QBM1Y~ END
+		
+	//高阶命令圣印	
+	COPY_EXISTING c4QB02.spl ~override/c4QB02X.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=143 STR_VAR resource=c4QBM0X END
+
+	//使用背刺倍数作为高阶复仇之怒判断
+	LAF ADD_SPLPROT_ENTRY INT_VAR stat=56 value=~-1~ relation=1 RET BSBONUS=index END
+
+	OUTER_FOR (i=0;i<4;++i) BEGIN
+	
+		ACTION_IF i>0 BEGIN
+			OUTER_SET name= (i=1) ? 37 : (i+33)
+			OUTER_SET name = RESOLVE_STR_REF ((AT name))
+			OUTER_SET ~name%i%~ = name
+			LAF cd_new_portrait_icon INT_VAR string=name STR_VAR bam_file=c4QBSymb RET header_icon=icon END
+		END
+		
+		COPY_EXISTING ~c4QBM%i%.itm~ ~override/c4QBM%i%X.itm~
+			FOR (j=1;j<4;++j) BEGIN
+				LPF ALTER_EFFECT INT_VAR check_globals=0 match_opcode=143 STR_VAR match_resource=~c4QBM%j%~ resource=~c4QBM%j%X~ END
+			END
+			PATCH_IF i=1 BEGIN
+				LPF ALTER_EFFECT INT_VAR check_headers=0 match_opcode=142 parameter2=header_icon END
+				LPF ALTER_EFFECT INT_VAR check_headers=0 match_opcode=272 STR_VAR match_resource=~c4QBM10~ resource=~c4QBM1X~ END
+				LPF CLONE_EFFECT INT_VAR check_headers=0 match_opcode=272 STR_VAR match_resource=~c4QBM1X~ resource=~c4QBM1Y~ END
+				SAY 0x08 @37
+				SAY 0x0c @37
+			END
+			PATCH_IF i=0 BEGIN
+				SAY 0x50 @38
+				SAY 0x54 @38
+			END ELSE BEGIN
+				SAY 0x50 @39
+				SAY 0x54 @39
+			END
+	END
+		
+	OUTER_FOR (j=0;j<4;++j) BEGIN
+		APPEND_OUTER ~override/tooltip.2da~ ~c4QBM%j%X	%name1%	%name2%	%name3%~
+	END
+	
+	LAF CREATE_EFFECT INT_VAR opcode=326 target=2 duration=1 parameter1=0 parameter2=BSBONUS STR_VAR resource=~c4QBM1X~ name=~c4QBM1X~ END
+	LAF CREATE_EFFECT INT_VAR opcode=326 target=2 duration=1 parameter1=1 parameter2=BSBONUS STR_VAR resource=~c4QBM1Y~ name=~c4QBM1Y~ END
+	
+	COPY ~%SPELLS%/c4QBM1XB.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=4	level_multiplier=2  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=1 multi_parameter1=1 END
+	
+	COPY ~%SPELLS%/c4QBM1XB.spl~ ~override/c4QBM1XC.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=10 END
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=4	level_multiplier=2  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=2 multi_parameter1=2 END
+
+END

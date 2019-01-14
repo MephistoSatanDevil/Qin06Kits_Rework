@@ -1,0 +1,58 @@
+DEFINE_ACTION_FUNCTION thief BEGIN
+
+	OUTER_TEXT_SPRINT Q06C ~%mod_root%/thief~
+	OUTER_TEXT_SPRINT EFFECTS ~%Q06C%/eff~
+	OUTER_TEXT_SPRINT ITEMS ~%Q06C%/itm~
+	OUTER_TEXT_SPRINT SCRIPTS ~%Q06C%/baf~
+	OUTER_TEXT_SPRINT SPELLS ~%Q06C%/spl~
+
+	OUTER_TEXT_SPRINT workspace ~%workspace%/thief~
+	
+	COPY ~%Q06C%/2da~ override
+		PRETTY_PRINT_2DA
+	// COPY ~%Q06C%/bam~ override
+	COPY ~%EFFECTS%/copy~ override
+	COPY ~%SPELLS%/copy~ override
+	
+	// 确保背刺倍数等条目扩展到50级，代码来自cdtweaks。不影响之前或之后安装相应组件
+	ACTION_FOR_EACH file IN backstab sneakatt crippstr BEGIN
+
+		ACTION_IF FILE_EXISTS_IN_GAME ~%file%.2da~ THEN BEGIN
+
+			COPY_EXISTING ~%file%.2da~ ~override~
+				COUNT_2DA_COLS col_num
+				COUNT_2DA_ROWS (col_num - 1) row_num
+				READ_2DA_ENTRY 0 (col_num - 2) (col_num - 1) level    // read last enry of top line as level
+				READ_2DA_ENTRY 0 0 (col_num - 1) val                  // weidu seems to freak out with a top line w/ one less entry
+				SET_2DA_ENTRY  0 0 (col_num - 1) ~CD_DELETE_ME %val%~ // temp
+				FOR (index = level ; index < 50 ; ++index) BEGIN
+					SET new = index + 1
+					FOR (index2 = 1 ; index2 < row_num ; ++index2) BEGIN // extend all other rows with previous column's value
+						READ_2DA_ENTRY index2 (col_num - 1) (col_num) val
+						SET_2DA_ENTRY  index2 (col_num - 1) (col_num) ~%val% %val%~
+					END
+					SET_2DA_ENTRY 0 (col_num - 1) (col_num) ~%index% %new%~ // extend level row
+					SET col_num += 1
+				END
+				REPLACE_TEXTUALLY ~CD_DELETE_ME~ ~~
+				PRETTY_PRINT_2DA
+				BUT_ONLY
+				
+		END
+	END
+
+	// addkit
+	LAF run STR_VAR file=add_kit file_loc=~thief/lib~ tra=thief_kit END
+
+	// 技能
+	LAF run STR_VAR file=skills file_loc=~thief/lib~ tra=thief_resource END
+
+	// 姿态
+	// LAF run STR_VAR file=styles file_loc=~thief/lib~ tra=thief_resource END
+	
+	// 高阶
+	// LAF run STR_VAR file=hla file_loc=~thief/lib~ tra=thief_resource END
+
+END
+//stat75 opcode184
+//stat114 高字节 opcode233

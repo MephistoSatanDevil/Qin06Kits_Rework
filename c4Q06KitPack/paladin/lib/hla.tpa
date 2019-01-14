@@ -1,0 +1,221 @@
+
+DEFINE_ACTION_FUNCTION hla BEGIN
+
+	//圣光领主
+	COPY ~%SPELLS%/c4QBG1.spl~ override
+		SAY 0x08 @101
+		SAY 0x50 @102
+
+	//专注光环
+	COPY ~%SPELLS%/c4QBG2.spl~ override
+		SAY 0x08 @103
+		SAY 0x50 @104
+
+	//治愈之光
+	COPY ~%SPELLS%/c4QBG3.spl~ override
+		SAY 0x08 @105
+		SAY 0x50 @106
+
+	//神圣光芒
+	COPY ~%SPELLS%/c4QBG4.spl~ override
+		SAY 0x08 @107
+		SAY 0x50 @108
+
+	//光之优雅
+	COPY ~%SPELLS%/c4QBG5.spl~ override
+		SAY 0x08 @109
+		SAY 0x50 @110
+
+	//神恩
+	COPY ~%SPELLS%/c4QBG6.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG60 END
+		SAY 0x08 @111
+		SAY 0x50 @112
+		
+	COPY ~%SPELLS%/c4QBG60.spl~ override
+		SAY 0x08 @111
+		SAY 0x50 @113
+
+	//神圣震击
+	COPY ~%SPELLS%/c4QBG7.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG70 END
+		SAY 0x08 @114
+		SAY 0x50 @115
+		
+	COPY ~%SPELLS%/c4QBG70.spl~ override
+		SAY 0x08 @114
+		SAY 0x50 @116
+
+	//神启
+	COPY ~%SPELLS%/c4QBG8.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG80 END
+		SAY 0x08 @117
+		SAY 0x50 @118
+		
+	COPY ~%SPELLS%/c4QBG80.spl~ override
+		FOR (i=1;i<30;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_timing=1 timing=4 duration=i STR_VAR match_resource=c4QBG8B insert=last END
+		END
+		SAY 0x08 @117
+		SAY 0x50 @119
+		
+	COPY ~%SPELLS%/c4QBG8A.spl~ override
+		LPF ALTER_SPELL_HEADER INT_VAR projectile=c4QBAura END
+
+	//圣疗
+	COPY ~%SPELLS%/c4QBG9.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG90 END
+		SAY 0x08 @120
+		SAY 0x50 @121
+
+	COPY ~%SPELLS%/c4QBG90.spl~ override
+		SAY 0x08 @120
+		SAY 0x50 @122
+
+	//大十字军
+	COPY ~%SPELLS%/c4QBG10.spl~ override
+		SAY 0x08 @201
+		SAY 0x50 @202
+
+	//剑盾专精
+	COPY ~%SPELLS%/c4QBG11.spl~ override
+		SAY 0x08 @301
+		SAY 0x50 @302
+
+	//王者祝福
+	COPY ~%SPELLS%/c4QBG12.spl~ override
+		SAY 0x08 @303
+		SAY 0x50 @304
+
+	//神圣格挡
+	COPY ~%SPELLS%/c4QBG13.spl~ override
+		SAY 0x08 @305
+		SAY 0x50 @306
+		
+	COPY ~%SPELLS%/c4QBG13A.spl~ override
+		FOR (i=27;i<32;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=i parameter1=100 parameter2=1 END
+		END
+		FOR (i=84;i<90;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=i parameter1=100 parameter2=1 END
+		END
+		LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=173 parameter1=100 parameter2=1 END
+
+	//神佑之体
+	COPY ~%SPELLS%/c4QBG14.spl~ override
+		SAY 0x08 @307
+		SAY 0x50 @308
+
+	//复仇之盾
+	COPY ~%SPELLS%/c4QBG15.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG150 END
+		SAY 0x08 @309
+		SAY 0x50 @310
+
+	COPY ~%SPELLS%/c4QBG150.spl~ override
+		SAY 0x08 @309
+		SAY 0x50 @311
+
+	//庇护之手
+	COPY ~%SPELLS%/c4QBG16.spl~ override
+		SAY 0x08 @312
+		SAY 0x50 @313
+
+	//公正之锤
+	COPY ~%SPELLS%/c4QBG17.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG170 END
+		SAY 0x08 @314
+		SAY 0x50 @315
+
+	COPY ~%SPELLS%/c4QBG170.spl~ override
+		SAY 0x08 @314
+		SAY 0x50 @316
+
+	COPY ~%ITEMS%/c4QBG17.itm~ override
+		SAY 0x08 @314
+		SAY 0x0c @314
+
+	//双手剑专精
+	COPY ~%SPELLS%/c4QBG18.spl~ override
+		SAY 0x08 @401
+		SAY 0x50 @402
+
+	//定罪
+	COPY ~%SPELLS%/c4QBG19.spl~ override
+		SAY 0x08 @403
+		SAY 0x50 @404
+
+	//命令圣印
+	COPY ~%SPELLS%/c4QBG20.spl~ override
+		LPF CLONE_EFFECT INT_VAR match_opcode=143 opcode=177 parameter1=0 parameter2=2 STR_VAR resource=c4QBG20 END
+		SAY 0x08 @405
+		SAY 0x50 @406
+
+	//忏悔
+	COPY ~%SPELLS%/c4QBG21.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG210 END
+		SAY 0x08 @407
+		SAY 0x50 @408
+
+	COPY ~%SPELLS%/c4QBG210.spl~ override
+		SAY 0x08 @407
+		SAY 0x50 @409
+
+	//圣光出鞘
+	COPY ~%SPELLS%/c4QBG22.spl~ override
+		SAY 0x08 @410
+		SAY 0x50 @411
+
+	//十字军打击
+	COPY ~%SPELLS%/c4QBG23.spl~ override
+		SAY 0x08 @412
+		SAY 0x50 @413
+		
+	OUTER_FOR (i=1;i<4;++i) BEGIN
+		OUTER_PATCH_SAVE charge ~%i%~ BEGIN
+			WRITE_BYTE 0 THIS + 48
+		END
+		
+		LAF CREATE_EFFECT INT_VAR opcode=146 target=2 timing=1 parameter2=1 probability1=10 STR_VAR name=~c4QBG23%charge%~ resource=~c4QBG23%charge%~ END
+		
+		COPY ~%SPELLS%/c4QBG23Y.spl~ ~override/c4QBG23%charge%.spl~
+			INNER_PATCH_SAVE active_next ~%i%~ BEGIN
+				WRITE_BYTE 0 THIS + 49
+			END
+			LPF ALTER_EFFECT INT_VAR match_opcode=248 STR_VAR resource=~c4QBG23%active_next%~ END
+			FOR (j=1;j<i;++j) BEGIN 
+				INNER_PATCH_SAVE previous ~%j%~ BEGIN
+					WRITE_BYTE 0 THIS + 48
+				END
+				LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=321 timing=0 duration=0 STR_VAR resource=~c4QBG23%previous%~ END
+				LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=~c4QBG23%previous%~ insert=last END
+			END
+			LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=139 parameter1= RESOLVE_STR_REF (@414) STR_VAR insert=last END
+			LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=~c4QBG23%charge%~ insert=last END
+	END
+		
+	COPY_EXISTING ~c4QBG23c.spl~ override
+		LPF ALTER_EFFECT STR_VAR match_resource=~c4QBG23d~ resource=~c4QBG23x~ END
+		
+	LAF CREATE_EFFECT INT_VAR opcode=146 target=2 timing=1 parameter2=1 STR_VAR name=~c4QBG23x~ resource=~c4QBG23x~ END
+	
+	COPY ~%SPELLS%/c4QBG23X.spl~ override
+		SAY 0x08 @415
+		
+	LAF CREATE_EFFECT INT_VAR opcode=146 target=2 timing=1 parameter2=1 probability1=10 STR_VAR name=~c4QBG23Z~ resource=~c4QBG23Z~ END
+
+	COPY ~%SPELLS%/c4QBG23Z.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=4 level_multiplier=2 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=1 multi_dicenumber=1 END
+
+	//复仇之怒
+	COPY ~%SPELLS%/c4QBG24.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG240 END
+		SAY 0x08 @416
+		SAY 0x50 @417
+
+	COPY ~%SPELLS%/c4QBG240.spl~ override
+		SAY 0x08 @416
+		SAY 0x50 @418
+
+END

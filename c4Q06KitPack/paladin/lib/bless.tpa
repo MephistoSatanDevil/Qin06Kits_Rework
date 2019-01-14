@@ -1,0 +1,76 @@
+
+DEFINE_ACTION_FUNCTION bless BEGIN
+
+	//基础法术
+	COPY ~%SPELLS%/c4QBB.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=214 STR_VAR resource=c4QBB END
+		SAY 0x08 @51
+		SAY 0x50 @52
+
+	COPY ~%SPELLS%/c4QBB.spl~ ~override/c4QBBX.spl~
+		LPF ALTER_EFFECT STR_VAR match_resource=c4QBB resource=c4QBBX END
+		SAY 0x08 @51
+		SAY 0x50 @61
+	
+	//力量祝福
+	COPY ~%SPELLS%/c4QBB1.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=5	level_multiplier=5  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=73 parameter1=1 multi_parameter1=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=278 parameter1=1 multi_parameter1=1 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@54) END
+		SAY 0x08 @53
+	
+	//光明祝福
+	COPY ~%SPELLS%/c4QBB2.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=5	level_multiplier=5  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=0 parameter1=1 multi_parameter1=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=325 parameter1=1 multi_parameter1=1 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@56) END
+		SAY 0x08 @55
+	
+	//智慧祝福
+	COPY ~%SPELLS%/c4QBB3.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=5	level_multiplier=5  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=191 parameter1=1 multi_parameter1=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=323 parameter1=1 multi_parameter1=1 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@58) END
+		SAY 0x08 @57
+	
+	//王者祝福
+	COPY ~%SPELLS%/c4QBB4.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@60) END
+		SAY 0x08 @59
+	
+	//移除前一效果+魅力惩罚
+	OUTER_FOR (i=1;i<5;++i) BEGIN
+		OUTER_SET name= i*2+51
+		OUTER_SET name= RESOLVE_STR_REF ((AT name))
+
+		//小图标
+		LAF cd_new_portrait_icon INT_VAR string=name STR_VAR bam_file=c4QBBles RET icon END
+		
+		ACTION_DEFINE_ASSOCIATIVE_ARRAY CHA BEGIN
+			1 => ~-4~
+			2 => ~-2~
+			3 => ~-3~
+			4 => ~-5~
+		END
+		
+		ACTION_PHP_EACH CHA AS type => parameter1 BEGIN
+			ACTION_IF i=type BEGIN
+				LAF CREATE_EMPTY_SPELL STR_VAR name=~c4QBB%i%A~ END
+				COPY_EXISTING ~c4QBB%i%A.spl~ override
+					LPF ADD_SPELL_EFFECT INT_VAR opcode=6 target=1 duration=2400 parameter1 END
+			END
+		END
+		
+		COPY_EXISTING ~c4QBB%i%.spl~ override
+			LPF ALTER_EFFECT INT_VAR match_opcode=142 parameter2=icon END
+			FOR (j=1;j<5;++j) BEGIN
+				LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=321 duration=0 parameter2=0 STR_VAR resource=~c4QBB%j%~ END
+			END
+			LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=146 target=1 duration=2400 parameter2=1 resist_dispel=0 STR_VAR resource=~c4QBB%i%A~ END
+			
+	END
+
+END

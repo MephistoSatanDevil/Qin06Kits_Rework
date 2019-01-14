@@ -1,0 +1,36 @@
+
+DEFINE_ACTION_FUNCTION skills BEGIN
+
+	//种族天赋
+	COPY ~%SPELLS%/c4QA0A.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@11) END
+
+	COPY ~%SPELLS%/c4QA0B.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@12) END
+
+	COPY ~%SPELLS%/c4QA0C.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@13) END
+
+	COPY ~%SPELLS%/c4QA0D.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@14) END
+		
+	//冲锋		
+	COPY ~%SPELLS%/c4QAS1.spl~ override
+		SAY 0x08 @41
+		SAY 0x50 @42
+		
+	//战神		
+	COPY ~%SPELLS%/c4QAS2.spl~ override
+		SAY 0x08 @43
+		SAY 0x50 @44
+		
+	COPY ~%SPELLS%/c4QAS2A.spl~ override
+		SAY 0x08 @45
+		
+	COPY ~%SPELLS%/c4QAS2B.spl~ override
+		SAY 0x08 @46
+		
+	COPY ~%SPELLS%/c4QAS2C.spl~ override
+		SAY 0x08 @47
+
+END

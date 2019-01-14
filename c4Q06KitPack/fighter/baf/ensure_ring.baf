@@ -1,0 +1,13 @@
+
+// 检测戒指丢失
+IF
+	Kit(Player%PN%,c4Q06Fighter)
+	!HasItemEquiped("c4QAM0",Player%PN%)
+	!HasItemEquiped("c4QAM1",Player%PN%)
+	!HasItemEquiped("c4QAM2",Player%PN%)
+	!HasItemEquiped("c4QAM3",Player%PN%)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player%PN%,@4)
+		ReallyForceSpellRES("c4QA02",Player%PN%)
+END

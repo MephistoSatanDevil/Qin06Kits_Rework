@@ -1,0 +1,31 @@
+
+// 检测戒指丢失
+IF
+	Kit(Player%PN%,c4Q06Paladin)
+	TriggerOverride(Player%PN%,Global("c4QB_Symbol_1X","Locals",0))
+	!HasItemEquiped("c4QBM0",Player%PN%)
+	!HasItemEquiped("c4QBM1",Player%PN%)
+	!HasItemEquiped("c4QBM2",Player%PN%)
+	!HasItemEquiped("c4QBM3",Player%PN%)
+	!HasItemEquiped("c4QBM0X",Player%PN%)
+	!HasItemEquiped("c4QBM1X",Player%PN%)
+	!HasItemEquiped("c4QBM2X",Player%PN%)
+	!HasItemEquiped("c4QBM3X",Player%PN%)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player%PN%,@4)
+		ReallyForceSpellRES("c4QB02",Player%PN%)
+END
+
+IF
+	Kit(Player%PN%,c4Q06Paladin)
+	TriggerOverride(Player%PN%,Global("c4QB_Symbol_1X","Locals",1))
+	!HasItemEquiped("c4QBM0X",Player%PN%)
+	!HasItemEquiped("c4QBM1X",Player%PN%)
+	!HasItemEquiped("c4QBM2X",Player%PN%)
+	!HasItemEquiped("c4QBM3X",Player%PN%)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Player%PN%,@4)
+		ReallyForceSpellRES("c4QB02X",Player%PN%)
+END
