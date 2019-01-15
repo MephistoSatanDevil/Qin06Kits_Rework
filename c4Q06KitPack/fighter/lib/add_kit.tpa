@@ -40,7 +40,7 @@ DEFINE_ACTION_FUNCTION add_kit BEGIN
 			clsrcreq = ~1 0 0 1 0 1 1~
 	END
 	
-	//·À¼æÖ°, ·À½äÖ¸¶ªÊ§
+	//é˜²å…¼èŒ, é˜²æˆ’æŒ‡ä¸¢å¤±
 	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/observers.baf~
 		APPEND_FILE_EVALUATE ~%SCRIPTS%/check_multi_class.baf~
 		APPEND_FILE_EVALUATE ~%SCRIPTS%/ensure_ring.baf~

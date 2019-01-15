@@ -1,8 +1,5 @@
 
 DEFINE_ACTION_FUNCTION styles BEGIN
-	
-	//使用超渡等级作为高阶判断
-	LAF ADD_SPLPROT_ENTRY INT_VAR stat=55 value=~-1~ relation=1 RET TDLEVEL=index END
 
 	//小图标
 	LAF cd_new_portrait_icon INT_VAR string= RESOLVE_STR_REF (@24) STR_VAR bam_file=c4QAM1d RET d1=icon END
@@ -91,7 +88,6 @@ DEFINE_ACTION_FUNCTION styles BEGIN
 		LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=146 timing=9 parameter2=1 STR_VAR resource=c4QAM11 END
 	
 	COPY ~%SPELLS%/c4QAM10.spl~ override
-		LPF CLONE_EFFECT INT_VAR match_opcode=278 opcode=326 parameter1=10 parameter2=TDLEVEL STR_VAR resource=~c4QAM1X0~ END
 		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=2	level_multiplier=1 END
 		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=332 parameter1=1 multi_parameter1=1 END
 		GET_OFFSET_ARRAY headers SPL_V10_HEADERS

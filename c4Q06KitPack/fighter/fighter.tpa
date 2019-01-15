@@ -9,6 +9,7 @@ DEFINE_ACTION_FUNCTION fighter BEGIN
 	OUTER_TEXT_SPRINT workspace ~%workspace%/fighter~
 	
 	COPY ~%Q06A%/2da~ override
+		PRETTY_PRINT_2DA
 	COPY ~%Q06A%/bam~ override
 	COPY ~%EFFECTS%/copy~ override
 	COPY ~%SPELLS%/copy~ override

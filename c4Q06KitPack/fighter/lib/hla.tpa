@@ -3,119 +3,135 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 
 	//捍卫者
 	COPY ~%SPELLS%/c4QAD0.spl~ override
-		SAY 0x08 @201
-		SAY 0x50 @202
+		SAY 0x08 @101
+		SAY 0x50 @102
 
 	//预知
 	COPY ~%SPELLS%/c4QAD1.spl~ override
-		SAY 0x08 @203
-		SAY 0x50 @204
+		SAY 0x08 @103
+		SAY 0x50 @104
 
 	//坚韧
 	COPY ~%SPELLS%/c4QAD2.spl~ override
-		SAY 0x08 @205
-		SAY 0x50 @206
+		SAY 0x08 @105
+		SAY 0x50 @106
 
 	//破釜沉舟
 	COPY ~%SPELLS%/c4QAD3.spl~ override
-		SAY 0x08 @207
-		SAY 0x50 @208
+		SAY 0x08 @107
+		SAY 0x50 @108
+		
+	COPY ~%SPELLS%/c4QAD30.spl~ override
+		SAY 0x08 @107
+		SAY 0x50 @109
 
 	//震荡猛击
 	COPY ~%SPELLS%/c4QAD4.spl~ override
-		SAY 0x08 @209
-		SAY 0x50 @210
+		SAY 0x08 @110
+		SAY 0x50 @111
+		
+	COPY ~%SPELLS%/c4QAD40.spl~ override
+		SAY 0x08 @110
+		SAY 0x50 @112
 
 	//剑盾猛攻
 	COPY ~%SPELLS%/c4QAD5.spl~ override
-		SAY 0x08 @211
-		SAY 0x50 @212
+		SAY 0x08 @113
+		SAY 0x50 @114
 
 	//怒火专注
 	COPY ~%SPELLS%/c4QAD6.spl~ override
-		SAY 0x08 @213
-		SAY 0x50 @214
+		SAY 0x08 @115
+		SAY 0x50 @116
 
 	//活力
 	COPY ~%SPELLS%/c4QAD7.spl~ override
-		SAY 0x08 @215
-		SAY 0x50 @216
+		SAY 0x08 @117
+		SAY 0x50 @118
 		
 
 
 	//征服者
-	COPY ~%SPELLS%/c4QAC0.spl~ override
-		SAY 0x08 @101
-		SAY 0x50 @102
+	COPY ~%SPELLS%/c4QAB0.spl~ override
+		SAY 0x08 @201
+		SAY 0x50 @202
 		
 	//双武器专精
 	COPY ~%SPELLS%/c4QAB1.spl~ override
-		SAY 0x08 @103
-		SAY 0x50 @104
+		SAY 0x08 @203
+		SAY 0x50 @204
 		
 	//激怒
 	COPY ~%SPELLS%/c4QAB2.spl~ override
-		SAY 0x08 @105
-		SAY 0x50 @106
+		SAY 0x08 @205
+		SAY 0x50 @206
 		
 	//嗜血
 	COPY ~%SPELLS%/c4QAB3.spl~ override
-		SAY 0x08 @107
-		SAY 0x50 @108
+		SAY 0x08 @207
+		SAY 0x50 @208
+		
+	COPY ~%SPELLS%/c4QAB30.spl~ override
+		SAY 0x08 @207
+		SAY 0x50 @209
 		
 	//乱舞
 	COPY ~%SPELLS%/c4QAB4.spl~ override
-		SAY 0x08 @109
-		SAY 0x50 @110
+		SAY 0x08 @210
+		SAY 0x50 @211
 		
 	//精准
 	COPY ~%SPELLS%/c4QAB5.spl~ override
-		SAY 0x08 @111
-		SAY 0x50 @112
+		SAY 0x08 @212
+		SAY 0x50 @213
 		
 	//死亡旋风
 	COPY ~%SPELLS%/c4QAB6.spl~ override
-		SAY 0x08 @113
-		SAY 0x50 @114
+		SAY 0x08 @214
+		SAY 0x50 @215
 		
 	//暴怒
 	COPY ~%SPELLS%/c4QAB7.spl~ override
-		SAY 0x08 @115
-		SAY 0x50 @116
+		SAY 0x08 @216
+		SAY 0x50 @217
 		
 	//偏斜
 	COPY ~%SPELLS%/c4QAW1.spl~ override
-		SAY 0x08 @117
-		SAY 0x50 @118
+		SAY 0x08 @218
+		SAY 0x50 @219
 		
 	//钢铁意志
 	COPY ~%SPELLS%/c4QAW2.spl~ override
-		SAY 0x08 @119
-		SAY 0x50 @120
+		SAY 0x08 @220
+		SAY 0x50 @221
 		
 	//重伤
 	COPY ~%SPELLS%/c4QAW3.spl~ override
-		SAY 0x08 @121
-		SAY 0x50 @122
+		SAY 0x08 @222
+		SAY 0x50 @223
 		
 	//双手武器专精
 	COPY ~%SPELLS%/c4QAW4.spl~ override
-		SAY 0x08 @123
-		SAY 0x50 @124
+		SAY 0x08 @224
+		SAY 0x50 @225
 		
 	//死亡之愿
 	COPY ~%SPELLS%/c4QAW5.spl~ override
-		SAY 0x08 @125
-		SAY 0x50 @126
+		SAY 0x08 @226
+		SAY 0x50 @227
+		
+	COPY ~%SPELLS%/c4QAW50.spl~ override
+		SAY 0x08 @226
+		SAY 0x50 @228
 		
 	//复苏之风
 	COPY ~%SPELLS%/c4QAW6.spl~ override
-		SAY 0x08 @127
-		SAY 0x50 @128
+		SAY 0x08 @229
+		SAY 0x50 @230
 		
 	//无尽之怒
 	COPY ~%SPELLS%/c4QAW7.spl~ override
-		SAY 0x08 @129
-		SAY 0x50 @130
+		SAY 0x08 @231
+		SAY 0x50 @232
 
 END
