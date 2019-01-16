@@ -42,7 +42,7 @@ LAF run STR_VAR file=paladin file_loc=paladin END
 BEGIN @-3
 DESIGNATED 3
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
-DEPRECATED ~~
+// DEPRECATED ~~
 
 LAF run STR_VAR file=thief file_loc=thief END
 

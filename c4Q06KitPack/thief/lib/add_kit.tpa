@@ -39,22 +39,31 @@ DEFINE_ACTION_FUNCTION add_kit BEGIN
 			kit_name = ~c4Q06Thief~
 			backstab = ~1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1~
 			clsrcreq = ~1 1 1 0 0 0 0~
+			hpclass = ~HPC4QC~
 			thiefskl = ~40 15~
-			//test
-			thiefskl = ~0 0~
 			sneakatt = ~0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
 			crippstr = ~0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
 	END
 	
-	//·À¼æÖ°, ·ÀÎïÆ··¨Êõ¶ªÊ§
-	// COPY ~.../c4_inlined/blank.baf~ ~%workspace%/observers.baf~
-		// APPEND_FILE_EVALUATE ~%SCRIPTS%/check_multi_class.baf~
-		// APPEND_FILE_EVALUATE ~%SCRIPTS%/ensure_ring.baf~
+	//ç”Ÿå‘½è¡¨
+	COPY_EXISTING HPROG.2da ~override/HPC4QC.2da~
+		FOR (i=0;i<10;++i) BEGIN
+			SET_2DA_ENTRY_LATER mod i 1 4
+		END
+		SET_2DA_ENTRIES_NOW mod 4
+		PRETTY_PRINT_2DA
+	
+	//é˜²å…¼èŒ, é˜²ç‰©å“æ³•æœ¯ä¸¢å¤±
+	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/observers.baf~
+		APPEND_FILE_EVALUATE ~%SCRIPTS%/apr.baf~
+		APPEND_FILE_EVALUATE ~%SCRIPTS%/quiver.baf~
+		APPEND_FILE_EVALUATE ~%SCRIPTS%/check_multi_class.baf~
 		
-	// LAF create_observer STR_VAR name=c4QC conditions=~Kit(Player%slot%,c4Q06Thief)~ END
+	LAF create_observer STR_VAR name=c4QC conditions=~Kit(Player%slot%,c4Q06Thief)~ END
 
-	// OUTER_FOR (PN=1;PN<7;++PN) BEGIN
-		// EXTEND_BOTTOM ~c4QC%PN%.bcs~ ~%workspace%/observers.baf~ EVAL
-	// END
+	OUTER_FOR (PN=1;PN<7;++PN) BEGIN
+		EXTEND_BOTTOM ~c4QC%PN%.bcs~ ~%workspace%/observers.baf~ EVAL
+		EXTEND_BOTTOM_REGEXP ~baldur.*\.bcs~ ~%SCRIPTS%/recover_skills.baf~ EVAL
+	END
 
 END

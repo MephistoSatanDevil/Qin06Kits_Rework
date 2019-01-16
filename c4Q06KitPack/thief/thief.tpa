@@ -10,7 +10,7 @@ DEFINE_ACTION_FUNCTION thief BEGIN
 	
 	COPY ~%Q06C%/2da~ override
 		PRETTY_PRINT_2DA
-	// COPY ~%Q06C%/bam~ override
+	COPY ~%Q06C%/bam~ override
 	COPY ~%EFFECTS%/copy~ override
 	COPY ~%SPELLS%/copy~ override
 	
@@ -46,13 +46,8 @@ DEFINE_ACTION_FUNCTION thief BEGIN
 
 	// 技能
 	LAF run STR_VAR file=skills file_loc=~thief/lib~ tra=thief_resource END
-
-	// 姿态
-	// LAF run STR_VAR file=styles file_loc=~thief/lib~ tra=thief_resource END
 	
 	// 高阶
-	// LAF run STR_VAR file=hla file_loc=~thief/lib~ tra=thief_resource END
+	LAF run STR_VAR file=hla file_loc=~thief/lib~ tra=thief_resource END
 
 END
-//stat75 opcode184
-//stat114 高字节 opcode233

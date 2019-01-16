@@ -1,0 +1,21 @@
+
+// 7/15级加半次
+IF
+	Kit(Player%PN%,c4Q06Thief)
+	LevelGT(Player%PN%,6)
+	LevelLT(Player%PN%,15)
+	CheckStatLT(Player%PN%,8,PROFICIENCYDAGGER)
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c4QCAPR1",Player%PN%)
+END
+	
+IF
+	Kit(Player%PN%,c4Q06Thief)
+	LevelGT(Player%PN%,14)
+	CheckStatLT(Player%PN%,16,PROFICIENCYDAGGER)
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c4QCAPR2",Player%PN%)
+END
+	

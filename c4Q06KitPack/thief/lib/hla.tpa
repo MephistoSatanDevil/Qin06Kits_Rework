@@ -1,105 +1,85 @@
 
 DEFINE_ACTION_FUNCTION hla BEGIN
 
-	//征服者
-	COPY ~%SPELLS%/c4QAC0.spl~ override
+	//狂热
+	COPY ~%SPELLS%/c4QCG1.spl~ override
 		SAY 0x08 @101
 		SAY 0x50 @102
-		
-	COPY ~%SPELLS%/c4QAB1.spl~ override
+
+	//灵巧
+	COPY ~%SPELLS%/c4QCG2.spl~ override
 		SAY 0x08 @103
 		SAY 0x50 @104
-		
-	COPY ~%SPELLS%/c4QAB2.spl~ override
+
+	//幻影之舞
+	COPY ~%SPELLS%/c4QCG3.spl~ override
 		SAY 0x08 @105
 		SAY 0x50 @106
 		
-	COPY ~%SPELLS%/c4QAB3.spl~ override
+	COPY ~%SPELLS%/c4QCG3A.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@105) END
+
+	//轻弩·比尔吉沃特
+	COPY ~%SPELLS%/c4QCG4.spl~ override
 		SAY 0x08 @107
 		SAY 0x50 @108
-		
-	COPY ~%SPELLS%/c4QAB4.spl~ override
+
+	//比尔吉沃特机簧扣
+	COPY ~%SPELLS%/c4QCG5.spl~ override
 		SAY 0x08 @109
 		SAY 0x50 @110
-		
-	COPY ~%SPELLS%/c4QAB5.spl~ override
+
+	//破败王者
+	COPY ~%SPELLS%/c4QCG6.spl~ override
 		SAY 0x08 @111
 		SAY 0x50 @112
-		
-	COPY ~%SPELLS%/c4QAB6.spl~ override
+
+	//重弩·逆十字
+	COPY ~%SPELLS%/c4QCG7.spl~ override
 		SAY 0x08 @113
 		SAY 0x50 @114
-		
-	COPY ~%SPELLS%/c4QAB7.spl~ override
+
+	//十字机簧扣
+	COPY ~%SPELLS%/c4QCG8.spl~ override
 		SAY 0x08 @115
 		SAY 0x50 @116
-		
-	COPY ~%SPELLS%/c4QAW1.spl~ override
+
+	//最后的轻语
+	COPY ~%SPELLS%/c4QCG9.spl~ override
 		SAY 0x08 @117
 		SAY 0x50 @118
-		
-	COPY ~%SPELLS%/c4QAW2.spl~ override
+
+	//巨弩·暴风
+	COPY ~%SPELLS%/c4QCG10.spl~ override
 		SAY 0x08 @119
 		SAY 0x50 @120
-		
-	COPY ~%SPELLS%/c4QAW3.spl~ override
+
+	//风暴机簧扣
+	COPY ~%SPELLS%/c4QCG11.spl~ override
 		SAY 0x08 @121
 		SAY 0x50 @122
-		
-	COPY ~%SPELLS%/c4QAW4.spl~ override
+
+	//无尽
+	COPY ~%SPELLS%/c4QCG12.spl~ override
 		SAY 0x08 @123
 		SAY 0x50 @124
 		
-	COPY ~%SPELLS%/c4QAW5.spl~ override
+	COPY ~%SPELLS%/c4QCG12A.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@123) END
+
+	//精准
+	COPY ~%SPELLS%/c4QCG13.spl~ override
 		SAY 0x08 @125
 		SAY 0x50 @126
-		
-	COPY ~%SPELLS%/c4QAW6.spl~ override
+
+	//贯穿
+	COPY ~%SPELLS%/c4QCG14.spl~ override
 		SAY 0x08 @127
 		SAY 0x50 @128
-		
-	COPY ~%SPELLS%/c4QAW7.spl~ override
+
+	//强健
+	COPY ~%SPELLS%/c4QCG15.spl~ override
 		SAY 0x08 @129
 		SAY 0x50 @130
-
-	//捍卫者
-	COPY ~%SPELLS%/c4QAD0.spl~ override
-		SAY 0x08 @201
-		SAY 0x50 @202
-
-	//预知
-	COPY ~%SPELLS%/c4QAD1.spl~ override
-		SAY 0x08 @203
-		SAY 0x50 @204
-
-	//坚韧
-	COPY ~%SPELLS%/c4QAD2.spl~ override
-		SAY 0x08 @205
-		SAY 0x50 @206
-
-	//破釜沉舟
-	COPY ~%SPELLS%/c4QAD3.spl~ override
-		SAY 0x08 @207
-		SAY 0x50 @208
-
-	//震荡猛击
-	COPY ~%SPELLS%/c4QAD4.spl~ override
-		SAY 0x08 @209
-		SAY 0x50 @210
-
-	//剑盾猛攻
-	COPY ~%SPELLS%/c4QAD5.spl~ override
-		SAY 0x08 @211
-		SAY 0x50 @212
-
-	//怒火专注
-	COPY ~%SPELLS%/c4QAD6.spl~ override
-		SAY 0x08 @213
-		SAY 0x50 @214
-
-	//活力
-	COPY ~%SPELLS%/c4QAD7.spl~ override
-		SAY 0x08 @215
-		SAY 0x50 @216
 
 END

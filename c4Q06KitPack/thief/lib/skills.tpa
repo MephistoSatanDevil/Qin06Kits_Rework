@@ -2,34 +2,122 @@
 DEFINE_ACTION_FUNCTION skills BEGIN
 	
 	////视野惩罚
-	LAF ADD_SPLPROT_ENTRY INT_VAR stat=114 value=0b1000 relation=9 RET OutDoor=index END
-	// LAF ADD_SPLPROT_ENTRY INT_VAR stat=0x106 value=1 relation=8 RET OutDoor=index END
+	LAF ADD_SPLPROT_ENTRY INT_VAR stat=0x106 value=1 relation=8 RET OutDoor=index END
 	LAF ADD_SPLPROT_ENTRY INT_VAR stat=0x106 value=1 relation=9 RET NotOutDoor=index END
 	LAF ADD_SPLPROT_ENTRY INT_VAR stat=0x103 value=NotOutDoor relation=90 RET NightOrNotOutDoor=index END
 	
-	LAF CREATE_EFFECT INT_VAR opcode=326 target=1 timing=1 parameter2=OutDoor STR_VAR name=c4QC0A resource=c4QC00A END
+	LAF CREATE_EFFECT INT_VAR opcode=326 target=1 timing=1 parameter2=OutDoor STR_VAR name=c4QCVRA resource=c4QCVR0 END
 	
-	LAF CREATE_EMPTY_SPELL STR_VAR name=c4QC00A END
-	COPY_EXISTING c4QC00A.spl override
-		LPF ADD_SPELL_EFFECT INT_VAR opcode=326 target=1 timing=9 parameter2=89 STR_VAR resource=c4QC0A END
-		LPF ADD_SPELL_EFFECT INT_VAR opcode=139 target=1 timing=9 parameter1=333 END
+	LAF CREATE_EMPTY_SPELL STR_VAR name=c4QCVR0 END
+	COPY_EXISTING c4QCVR0.spl override
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=326 target=1 timing=9 parameter2=89 STR_VAR resource=c4QCVRA END
 	
-	LAF CREATE_EFFECT INT_VAR opcode=326 target=1 timing=1 parameter2=NightOrNotOutDoor STR_VAR name=c4QC0B resource=c4QC0B END
+	LAF CREATE_EFFECT INT_VAR opcode=326 target=1 timing=1 parameter2=NightOrNotOutDoor STR_VAR name=c4QCVRB resource=c4QCVRB END
 		
-	COPY_EXISTING_REGEXP GLOB ~c4QC0[AB]\.spl~ override
-		LPF CLONE_EFFECT INT_VAR match_opcode=262 opcode=321 target=1 timing=0 parameter1=0 parameter2=0 STR_VAR resource=c4QC0A END
-		LPF CLONE_EFFECT INT_VAR match_opcode=262 opcode=321 target=1 timing=0 parameter1=0 parameter2=0 STR_VAR resource=c4QC0B END
+	COPY_EXISTING_REGEXP GLOB ~c4QCVR[AB]\.spl~ override
+		LPF CLONE_EFFECT INT_VAR match_opcode=262 opcode=321 target=1 timing=0 parameter1=0 parameter2=0 STR_VAR resource=c4QCVRA END
+		LPF CLONE_EFFECT INT_VAR match_opcode=262 opcode=321 target=1 timing=0 parameter1=0 parameter2=0 STR_VAR resource=c4QCVRB END
 		LPF CLONE_EFFECT INT_VAR match_opcode=262 opcode=63 target=1 timing=9 parameter1=0 parameter2=0 END
 	
 	COPY_EXISTING c4QC00.spl override
-		LPF CLONE_EFFECT INT_VAR match_opcode=190 opcode=272 parameter1=1 parameter2=3 STR_VAR resource=c4QC0A END
-		LPF CLONE_EFFECT INT_VAR match_opcode=190 opcode=272 parameter1=1 parameter2=3 STR_VAR resource=c4QC0B END
+		LPF CLONE_EFFECT INT_VAR match_opcode=190 opcode=272 parameter1=1 parameter2=3 STR_VAR resource=c4QCVRA END
+		LPF CLONE_EFFECT INT_VAR match_opcode=190 opcode=272 parameter1=1 parameter2=3 STR_VAR resource=c4QCVRB END
 		//禁飞镖匕首
 		PATCH_FOR_EACH type IN 16 24 BEGIN
-			LPF CLONE_EFFECT INT_VAR match_opcode=249 opcode=181 parameter1=type parameter2=0 special= RESOLVE_STR_REF (@0) END
+			LPF CLONE_EFFECT INT_VAR match_opcode=190 opcode=181 parameter1=type parameter2=0 special= RESOLVE_STR_REF (@0) END
 		END
 		
 	////银箭
-	LAF ADD_SPLPROT_ENTRY INT_VAR stat=114 value=~-1~ relation=8 RET SilverBolt=index END
+	LAF ADD_SPLPROT_ENTRY INT_VAR stat=114 value=~-1~ relation=1 RET SilverBolt=index END
+	
+	COPY ~%SPELLS%/c4QC10.spl~ override
+		FOR (i=0;i<4;++i) BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode=326 target=2 timing=9 parameter1=i parameter2=SilverBolt STR_VAR resource=c4QC1A END
+			LPF ADD_SPELL_EFFECT INT_VAR opcode=326 target=2 timing=9 parameter1=i+8 parameter2=SilverBolt STR_VAR resource=c4QC1A END
+			LPF ADD_SPELL_EFFECT INT_VAR opcode=326 target=2 timing=9 parameter1=i+16 parameter2=SilverBolt STR_VAR resource=c4QC1B END
+		END
+		
+	COPY ~%SPELLS%/c4QC1C.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=3	level_multiplier=3 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 match_probility1=10 parameter1=0 multi_parameter1=2 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 match_probility1=100 parameter1=0 multi_parameter1=1 END
+		SAY 0x08 @10
+		
+	////闪避突袭
+	LAF ADD_SPLPROT_ENTRY INT_VAR stat=106 value=~-1~ relation=1 RET FinalS1=index END
+	
+	COPY ~%SPELLS%/c4QCS1.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=326 parameter2=FinalS1 END
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=5	level_multiplier=5 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=146 match_timing=4 duration=18 multi_duration=~-3~ END
+		SAY 0x08 @11
+		SAY 0x50 @12
+		
+	COPY ~%SPELLS%/c4QCS1A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=5	level_multiplier=5 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=332 parameter1=50 multi_parameter1=5 END
+		
+	COPY ~%SPELLS%/c4QCS1R.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@13) END
+		
+	////恶魔审判
+	COPY ~%SPELLS%/c4QCS2.spl~ override
+		SAY 0x08 @14
+		SAY 0x50 @15
+		
+	COPY ~%SPELLS%/c4QCS2B.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=5	level_multiplier=5 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=0 multi_parameter1=2 END
+		
+	COPY ~%SPELLS%/c4QCS2C.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=5	level_multiplier=5 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=0 multi_parameter1=4 END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET savebonus = (min_level<20) ? (0 - min_level/5) : ~-4~
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				PATCH_IF opcode=39 BEGIN
+					WRITE_LONG offset+0x28 savebonus
+				END
+			END
+		END
+		
+	COPY ~%SPELLS%/c4QCS2R.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@16) END
+		
+	////终极时刻
+	COPY ~%SPELLS%/c4QCS3.spl~ override
+		SAY 0x08 @17
+		SAY 0x50 @18
+		
+	COPY ~%SPELLS%/c4QCS3R.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@19) END
+
+	////箭袋
+	OUTER_FOR (i=0;i<5;++i) BEGIN
+		OUTER_SET name=i*2+21
+		OUTER_SET name= RESOLVE_STR_REF ((AT name))
+		OUTER_SET desc=i*2+22
+		OUTER_SET desc= RESOLVE_STR_REF ((AT desc))
+		
+		COPY ~%ITEMS%/c4QCQV0.itm~ ~override/c4QCQV%i%.itm~
+			//魔法武器flag
+			PATCH_IF i>0 BEGIN
+				WRITE_BYTE 0x18 THIS BOR 0b01000000
+			END
+			//附魔
+			WRITE_LONG 0x60 i
+			LPF ALTER_ITEM_HEADER INT_VAR thac0_bonus=i END
+			WRITE_LONG 0x08 name
+			WRITE_LONG 0x0c name
+			WRITE_LONG 0x50 desc
+			WRITE_LONG 0x54 desc
+			
+		COPY ~%SPELLS%/c4QCQV0.spl~ ~override/c4QCQV%i%.spl~
+			LPF ALTER_EFFECT STR_VAR resource=~c4QCQV%i%~ END
+	END
 
 END
