@@ -48,6 +48,13 @@ LAF run STR_VAR file=thief file_loc=thief END
 
 ///////////////////////////////////////////////////////////////////
 
+BEGIN @-4
+DESIGNATED 4
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
+// DEPRECATED ~~
+
+LAF run STR_VAR file=shaman file_loc=shaman END
+
 
 
 
