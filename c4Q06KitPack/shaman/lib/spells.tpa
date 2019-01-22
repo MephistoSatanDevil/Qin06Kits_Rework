@@ -43,15 +43,15 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 
 	COPY ~%SPELLS%/c4QDB2A.spl~ override
 		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=1 END
-		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=1 multi_dicenumber=1 END
-		GET_OFFSET_ARRAY header SPL_V10_HEADERS
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 match_timing=1 dicenumber=1 multi_dicenumber=1 END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
 		PHP_EACH headers AS int => index BEGIN
 			READ_SHORT index+0x10 min_level
 			SET damage= (min_level/4)+1
 			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
 			PHP_EACH effect AS int => offset BEGIN
 				READ_SHORT offset opcode
-				READ_SHORT offset+0xc timing
+				READ_BYTE offset+0xc timing
 				PATCH_IF opcode=12 && timing=4 BEGIN
 					WRITE_LONG offset+0x4 damage
 				END
@@ -74,7 +74,7 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		SAY 0x50 @124
 		
 	COPY_EXISTING c4QDB2B.spl ~override/c4QDB2C.spl~
-		LPF CLONE_EFFECT INT_VAR match_opcode=12 opcode=146 target=1 parameter1=0 parameter2=1 resist_dispel=0 savingthrow=0 dicenumber=0 special=0 STR_VAR resource=c4QD2P END
+		LPF CLONE_EFFECT INT_VAR match_opcode=12 opcode=146 target=1 parameter1=0 parameter2=1 resist_dispel=0 savingthrow=0 dicenumber=0 special=0 STR_VAR resource=c4QDB2P END
 		LPF ALTER_EFFECT INT_VAR match_opcode=12 match_timing=1 dicenumber=30 END
 		LPF ALTER_EFFECT INT_VAR match_opcode=12 match_timing=4 parameter1=14 END
 
@@ -287,7 +287,7 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		FOR (i=1;i<7;++i) BEGIN
 			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i STR_VAR insert=last END
 		END
-		GET_OFFSET_ARRAY header SPL_V10_HEADERS
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
 		PHP_EACH headers AS int => index BEGIN
 			READ_SHORT index+0x10 min_level
 			SET regen = min_level/5
@@ -295,8 +295,8 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
 			PHP_EACH effect AS int => offset BEGIN
 				READ_SHORT offset opcode
-				READ_SHORT offset+0xc timing
-				READ_SHORT offset+0xe duration
+				READ_BYTE offset+0xc timing
+				READ_LONG offset+0xe duration
 				PATCH_IF opcode=17 BEGIN
 					PATCH_IF timing=1 || (timing=4 && duration<6) BEGIN
 						WRITE_LONG offset+0x04 regen
