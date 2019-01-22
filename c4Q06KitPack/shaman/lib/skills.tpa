@@ -1,0 +1,340 @@
+
+DEFINE_ACTION_FUNCTION skills BEGIN
+	
+	/* 
+		基础变形法术：1-3级T1-T3
+		高阶强化T4+二进制三位数，0b001-0b111，高阶变量判断？
+	*/
+	ACTION_DEFINE_ASSOCIATIVE_ARRAY TRANSFORM_TABLE BEGIN
+		Bear	, 0b001 , PLYBEA1B	=> A
+		Cat		,	0b010 , PLYWOLFB	=> B
+		Tree	,	0b100	, PLYFLINB	=> C
+	END
+		
+	OUTER_FOR (i=1;i<5;++i) BEGIN
+
+		ACTION_IF i<4 BEGIN
+			
+			//表格
+			COPY_EXISTING c4QDT1.2da ~override/c4QDT%i%.2da~
+				SET $TRANSFORM_ROOT(~%DEST_RES%~)=i
+				FOR (j=1;j<4;++j) BEGIN
+					PHP_EACH TRANSFORM_TABLE AS type => suffix BEGIN
+						READ_2DA_ENTRY j 0 3 type1
+						PATCH_IF ~%type_0%~ STR_EQ ~%type1%~ BEGIN
+							SET_2DA_ENTRY j 1 3 ~c4QDT%i%%suffix%~
+								SPRINT $TRANSFORM_SPELL(~c4QDT%i%%suffix%~) ~%type_2%~
+						END
+					END
+				END
+				PRETTY_PRINT_2DA
+				
+			//说明文字
+			OUTER_SET tra_Bear=210+i
+			OUTER_SET tra_Cat=220+i
+			OUTER_SET tra_Tree=230+i
+			OUTER_SPRINT string_base @200
+			OUTER_SPRINT string_Bear (AT ~%tra_Bear%~)
+			OUTER_SPRINT string_Cat (AT ~%tra_Cat%~)
+			OUTER_SPRINT string_Tree (AT ~%tra_Tree%~)
+			OUTER_SPRINT string ~%string_base%~^~%string_Bear%~^~%string_Cat%~^~%string_Tree%~
+				
+			COPY ~%SPELLS%/c4QDT.spl~ ~override/c4QDT%i%.spl~
+				LPF ALTER_EFFECT STR_VAR resource=~c4QDT%i%~ END
+				SAY 0x08 @100
+				SAY_EVALUATED 0x50 ~%string%~
+				
+		END ELSE BEGIN
+			
+			OUTER_FOR (BITWISE=1;BITWISE<8;++BITWISE) BEGIN
+				OUTER_SET count=0
+				OUTER_SET temp=1
+				ACTION_PHP_EACH TRANSFORM_TABLE AS type => suffix BEGIN
+					ACTION_IF (~%type_1%~ BAND ~%BITWISE%~) != 0 BEGIN
+						OUTER_SET count+=~%type_1%~
+						OUTER_SET ~tra_%type_0%~=200+temp*10+4
+					END ELSE OUTER_SET ~tra_%type_0%~=200+temp*10+3
+					OUTER_SET temp+=1
+				END
+			
+				COPY_EXISTING c4QDT3.2da ~override/c4QDT4%count%.2da~
+					SET $TRANSFORM_ROOT(~%DEST_RES%~)=~4%count%~
+					FOR (j=1;j<4;++j) BEGIN
+						PHP_EACH TRANSFORM_TABLE AS type => suffix BEGIN
+							READ_2DA_ENTRY j 0 3 type1
+							PATCH_IF (~%type_0%~ STR_EQ ~%type1%~) && ((~%type_1%~ BAND ~%count%~) != 0) BEGIN
+								SET_2DA_ENTRY j 1 3 ~c4QDT4%suffix%~
+								SPRINT $TRANSFORM_SPELL(~c4QDT4%suffix%~) ~%type_2%~
+							END
+						END
+					END
+					PRETTY_PRINT_2DA
+					
+				OUTER_SPRINT string_Bear (AT ~%tra_Bear%~)
+				OUTER_SPRINT string_Cat (AT ~%tra_Cat%~)
+				OUTER_SPRINT string_Tree (AT ~%tra_Tree%~)
+				OUTER_SPRINT string ~%string_base%~^~%string_Bear%~^~%string_Cat%~^~%string_Tree%~
+					
+				COPY ~%SPELLS%/c4QDT.spl~ ~override/c4QDT4%count%.spl~
+					LPF ALTER_EFFECT STR_VAR resource=~c4QDT4%count%~ END
+					SAY 0x08 @100
+					SAY_EVALUATED 0x50 ~%string%~
+			
+			END // BITWISE
+				
+		END // i=4?
+
+	END	// for
+	
+	/* 
+		创建武器和给与技能：技能标识I，后缀ABC，给技能法术XYZ，不够等级或其他形态则装备上免疫XYZ
+		每次使用技能后使用ABC_免疫XYZ，休息后脚本移除ABC_效果并依次放XYZ
+	*/
+	ACTION_DEFINE_ASSOCIATIVE_ARRAY TRANSFORM_SKILLS BEGIN
+		X , A => 2
+		Y , B => 3
+		Z , C => 4
+	END
+	
+	//给技能法术
+	ACTION_FOR_EACH type IN A B C BEGIN
+		ACTION_PHP_EACH TRANSFORM_SKILLS AS spell => int BEGIN
+			OUTER_SPRINT $TRANSFORM_ADD_SKILLS(~c4QDI%type%%spell%~) ~c4QDI%type%%spell_1%~
+			//给法术
+			COPY ~%SPELLS%/c4QDI00.spl~ ~override/c4QDI%type%%spell%.spl~
+				LPF ALTER_EFFECT STR_VAR resource=~c4QDI%type%%spell_1%~ END
+				LPF CLONE_EFFECT INT_VAR opcode=172 END
+			//移除并免疫
+			COPY ~%SPELLS%/c4QDI00.spl~ ~override/c4QDI%type%%spell_1%_.spl~
+				LPF ALTER_EFFECT INT_VAR opcode=172 STR_VAR resource=~c4QDI%type%%spell_1%~ END
+				LPF CLONE_EFFECT INT_VAR opcode=206 timing=9 STR_VAR resource=~c4QDI%type%%spell%~ insert=last END
+		END
+	END
+	
+	//休息后恢复技能，拆成移除免疫和恢复技能，人形免疫恢复部分
+	OUTER_SET value=(IDS_OF_SYMBOL (KIT  c4Q06Shaman))
+	LAF ADD_SPLPROT_ENTRY INT_VAR stat=152 STR_VAR value relation=11 RET NOTKIT=index END
+	
+	COPY ~%SPELLS%/c4QDI000.spl~ override
+		PHP_EACH TRANSFORM_ADD_SKILLS AS spell1 => spell2 BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=139 opcode=321 timing=0 STR_VAR resource=~%spell2%_~ END
+		END
+		LPF CLONE_EFFECT INT_VAR match_opcode=139 opcode=318 timing=0 duration=1 parameter2=NOTKIT STR_VAR resource=c4QDI000 insert=first END
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@103) END
+
+	COPY ~%SPELLS%/c4QDI000.spl~ ~override/c4QDI001.spl~
+		PHP_EACH TRANSFORM_ADD_SKILLS AS spell1 => spell2 BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=139 opcode=146 parameter2=1 STR_VAR resource=~%spell1%~ END
+		END
+		LPF CLONE_EFFECT INT_VAR match_opcode=139 opcode=318 timing=0 duration=1 parameter2=NOTKIT STR_VAR resource=c4QDI001 insert=first END
+		LPF DELETE_EFFECT INT_VAR match_opcode=139 END
+		
+	//带有魔法睡觉效果的法术也重置技能
+	COPY_EXISTING_REGEXP ~.+\.spl~ override
+		LPF DELETE_EFFECT INT_VAR silent=1 match_opcode=146 STR_VAR match_resource=c4QDI000 END
+		LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=316 opcode=146 timing=1 duration=0 parameter1=0 parameter2=1 STR_VAR resource=c4QDI000 END
+		LPF DELETE_EFFECT INT_VAR silent=1 match_opcode=146 STR_VAR match_resource=c4QDI001 END
+		LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=316 opcode=146 timing=1 duration=0 parameter1=0 parameter2=0 STR_VAR resource=c4QDI001 END
+		BUT_ONLY
+	
+	/*
+	COPY ~%SCRIPTS%/restore_skill.baf~ ~%workspace%/restore_skill.baf~
+		PHP_EACH TRANSFORM_ADD_SKILLS AS spell1 => spell2 BEGIN
+			REPLACE_TEXTUALLY ~Wait(1)~
+												~Wait(1)%LNL%ReallyForceSpellRES("%spell1%",Player%PN%)~
+		END
+
+	OUTER_FOR (PN=1;PN<7;++PN) BEGIN
+		EXTEND_BOTTOM_REGEXP ~baldur.*\.bcs~ ~%workspace%/restore_skill.baf~ EVAL
+	END
+	*/
+
+	//变回人形，清除法术，武器，技能
+	COPY ~%SPELLS%/c4QDT00.spl~ override
+		PHP_EACH TRANSFORM_SPELL AS spell => int BEGIN
+			LPF CLONE_EFFECT INT_VAR opcode=112 timing=1 duration=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
+			LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
+		END
+		PHP_EACH TRANSFORM_ADD_SKILLS AS spell1 => spell2 BEGIN
+			LPF CLONE_EFFECT INT_VAR opcode=172 timing=1 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=~%spell2%~ END
+			LPF CLONE_EFFECT INT_VAR opcode=206 timing=9 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=~%spell1%~ END
+		END
+		SAY 0x08 @101
+		SAY 0x50 @102
+	
+	// 变形控制
+	ACTION_FOR_EACH type IN A B C BEGIN
+	
+		OUTER_FOR (i=1;i<5;++i) BEGIN
+		
+			OUTER_SET tra_ten = (~%type%~ STR_EQ A) ? 1 : (~%type%~ STR_EQ B) ? 2 : 3
+
+			//创造武器
+			COPY ~%SPELLS%/c4QDT00.spl~ ~override/c4QDT%i%%type%.spl~
+				PATCH_IF ~%type%~ STR_CMP A BEGIN
+					LPF ALTER_SPELL_HEADER INT_VAR speed=3 END
+				END ELSE LPF ALTER_SPELL_HEADER INT_VAR speed=0 END
+				PHP_EACH TRANSFORM_SPELL AS spell => icon BEGIN
+					PATCH_IF ~%spell%~ STRING_CONTAINS_REGEXP ~[1-4]%type%~ =0 BEGIN
+						LPF ALTER_SPELL_HEADER STR_VAR icon END
+					END ELSE BEGIN
+						LPF CLONE_EFFECT INT_VAR opcode=112 timing=1 duration=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
+						LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
+					END
+				END
+				LPF CLONE_EFFECT INT_VAR opcode=111 duration=360000 STR_VAR match_resource=SPPOLYMP resource=~c4QDT%i%%type%~ END
+				SET name=100+tra_ten*10+i
+				SAY 0x08 (AT name)
+				
+			//武器上按等级添加技能，移除非本形态技能
+			COPY ~%ITEMS%/c4QDT%i%%type%.itm~ override
+				PHP_EACH TRANSFORM_ADD_SKILLS AS spell1 => spell2 BEGIN
+					LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=172 timing=1 parameter2=0 STR_VAR resource=~%spell2%~ END
+					PATCH_IF ~%spell2%~ STRING_CONTAINS_REGEXP ~c4QDI%type%~ BEGIN
+						LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=206 timing=2 parameter2=0 STR_VAR resource=~%spell1%~ END
+					END
+				END
+				PHP_EACH TRANSFORM_SKILLS AS spell => min BEGIN
+					PATCH_IF i >= min BEGIN
+						LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=146 timing=1 parameter2=0 STR_VAR resource=~c4QDI%type%%spell%~ END
+					END ELSE BEGIN
+						LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=206 parameter2=0 STR_VAR resource=~c4QDI%type%%spell%~ END
+					END
+				END
+				PATCH_IF ~%type%~ STR_CMP B BEGIN
+					LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=206 parameter2=0 STR_VAR resource=~c4QDGNBA~ END
+				END					
+				SET name=100+tra_ten*10+i
+				SAY 0x08 (AT name)
+				SAY 0x0c (AT name)
+				
+		END // for
+
+	END // for_each
+
+	/* 熊A：活力xA1，防龙翼IA0，其他形态移除 */
+	// 防龙翼
+	COPY_EXISTING_REGEXP ~c4QDT[1-4]A.itm~ override
+		LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=146 timing=1 parameter2=1 STR_VAR resource=c4QDIA0 END
+	
+	// 其他形态移除
+	COPY_EXISTING_REGEXP ~c4QDT[1-4][BC].spl~ override ~c4QDT00.spl~ override
+		LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 STR_VAR match_resource=SPPOLYMP resource=c4QDIA0 insert=first END
+		
+	// 活力
+	OUTER_FOR (i=1;i<5;++i) BEGIN
+		OUTER_SET hp = (i=1) ? 35 : (i=2) ? 70 : (i=3) ? 125 : 200
+		COPY ~%SPELLS%/c4QDT0A1.spl~ ~override/c4QDT%i%A1.spl~
+			LPF ALTER_EFFECT INT_VAR parameter1=hp END
+			LPF CLONE_EFFECT INT_VAR match_opcode=139 opcode=206 timing=0 duration=120 parameter1=0 STR_VAR resource=~c4QDT%i%A1~ insert=below END
+			LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@115) END
+			
+		COPY_EXISTING ~c4QDT%i%A.itm~ override
+			LPF CLONE_EFFECT INT_VAR match_opcode=18 opcode=146 timing=1 parameter1=0 parameter2=1 STR_VAR resource=~c4QDT%i%A1~ insert=below END
+	END
+	
+	// 冲撞
+	COPY ~%SPELLS%/C4QDIAA.spl~ override
+		SAY 0x08 @215
+		SAY 0x50 @216
+
+	COPY ~%SPELLS%/C4QDIAA2.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=5	level_multiplier=5 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=0 multi_parameter1=2 END
+	
+	// 咆哮
+	COPY ~%SPELLS%/C4QDIAB.spl~ override
+		SAY 0x08 @217
+		SAY 0x50 @218
+	
+	// 生存本能
+	COPY ~%SPELLS%/C4QDIAC.spl~ override
+		SAY 0x08 @219
+		SAY 0x50 @220
+
+	/* 猫B：*/	
+	// 撕碎
+	COPY ~%SPELLS%/C4QDIBA.spl~ override
+		SAY 0x08 @225
+		SAY 0x50 @226
+		
+	COPY ~%SPELLS%/C4QDIBA3.spl~ override
+		LPF ALTER_SPELL_HEADER INT_VAR projectile=c4QDIBA3 END
+
+	// 闪避
+	COPY ~%SPELLS%/C4QDIBB.spl~ override
+		SAY 0x08 @227
+		SAY 0x50 @228
+
+	// 凶猛撕咬
+	COPY ~%SPELLS%/C4QDIBC.spl~ override
+		SAY 0x08 @229
+		SAY 0x50 @230
+		
+	COPY ~%SPELLS%/c4QDT4B1.spl~ override
+		SAY 0x08 @2200
+
+	/* 树C：*/
+	// 激活
+	COPY ~%SPELLS%/C4QDICA.spl~ override
+		FOR (i=1;i<5;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=261 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
+		END
+		SAY 0x08 @235
+		SAY 0x50 @236
+
+	// 野性成长
+	COPY ~%SPELLS%/C4QDICB.spl~ override
+		SAY 0x08 @237
+		SAY 0x50 @238
+		
+	COPY ~%SPELLS%/C4QDICB1.spl~ override
+		FOR (i=1;i<5;++i) BEGIN
+			SET parameter1= 30 - i*5
+			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i*3 parameter1 STR_VAR insert=last END
+		END
+
+	// 西凡那斯之怒
+	COPY ~%SPELLS%/C4QDICC.spl~ override
+		SAY 0x08 @239
+		SAY 0x50 @240
+
+	/*
+	// 小定序
+	COPY ~%SPELLS%/C4QDICA.spl~ override ~%SPELLS%/C4QDICAD.spl~ override
+		SAY 0x08 @235
+		SAY 0x50 @236
+
+	// 中定序
+	COPY ~%SPELLS%/C4QDICB.spl~ override ~%SPELLS%/C4QDICBD.spl~ override
+		SAY 0x08 @237
+		SAY 0x50 @238
+
+	// 大定序
+	COPY ~%SPELLS%/C4QDICC.spl~ override ~%SPELLS%/C4QDICCD.spl~ override
+		SAY 0x08 @239
+		SAY 0x50 @240
+	*/
+
+	
+	/* 脚本中使用的擦除并添加变形跟法术 */
+	COPY ~.../c4_inlined/blank.2da~ ~%workspace%/transform_var_hla.2da~
+	APPEND_OUTER ~%workspace%/transform_var_hla.2da~ ~check%TAB%cast~
+	
+	ACTION_PHP_EACH TRANSFORM_ROOT AS spell => type BEGIN
+		COPY ~%SPELLS%/c4QDI00.spl~ ~override/%spell%_.spl~
+			LPF ALTER_EFFECT STR_VAR resource=~%spell%~ END
+			PHP_EACH TRANSFORM_ROOT AS spell2 => type2 BEGIN
+				LPF CLONE_EFFECT INT_VAR match_opcode=171 opcode=172 STR_VAR resource=~%spell2%~ END
+			END
+			
+		ACTION_IF type>40 BEGIN
+			OUTER_SET var=type - 40
+			APPEND_OUTER ~%workspace%/transform_var_hla.2da~ ~%var%%TAB%%spell%%TAB%%spell%_~
+		END
+	END	
+	
+	COPY ~%workspace%/transform_var_hla.2da~ ~%workspace%/transform_var_hla.2da~
+		PRETTY_PRINT_2DA
+		
+END

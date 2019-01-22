@@ -1,0 +1,53 @@
+DEFINE_ACTION_FUNCTION shaman BEGIN
+
+	OUTER_TEXT_SPRINT Q06D ~%mod_root%/shaman~
+	// OUTER_TEXT_SPRINT CREATURES ~%Q06D%/cre~
+	OUTER_TEXT_SPRINT EFFECTS ~%Q06D%/eff~
+	OUTER_TEXT_SPRINT ITEMS ~%Q06D%/itm~
+	OUTER_TEXT_SPRINT SCRIPTS ~%Q06D%/baf~
+	OUTER_TEXT_SPRINT SPELLS ~%Q06D%/spl~
+
+	OUTER_TEXT_SPRINT workspace ~%workspace%/shaman~
+
+	COPY ~%Q06D%/bam~ override
+	COPY ~%Q06D%/2da~ override
+		PRETTY_PRINT_2DA
+	COPY ~%EFFECTS%/copy~ override
+	COPY ~%SPELLS%/copy~ override
+		WRITE_LONG 0x08 ~-1~
+		WRITE_LONG 0x50 ~-1~
+		
+	//add pro
+	COPY_EXISTING INAREA.pro ~override/c4QDIBA3.pro~
+		WRITE_BYTE 0xc (THIS BOR 0b00010000)
+		WRITE_SHORT 0x204 85
+		WRITE_SHORT 0x206 85
+
+	// COPY_EXISTING fireball.pro ~override/c4QBS9.pro~
+		// WRITE_BYTE 0x200 (THIS BOR 0b01000000)
+		
+	// COPY_EXISTING INAREAPA.pro ~override/c4QBAura.pro~
+		// WRITE_SHORT 0x204 512
+		// WRITE_SHORT 0x206 512
+		
+	ADD_PROJECTILE ~override/c4QDIBA3.pro~		
+	// ADD_PROJECTILE ~override/c4QBS8.pro~		
+	// ADD_PROJECTILE ~override/c4QBAura.pro~
+
+
+	// addkit
+	LAF run STR_VAR file=add_kit file_loc=~shaman/lib~ tra=shaman_kit END
+
+	// 变形技能
+	LAF run STR_VAR file=skills file_loc=~shaman/lib~ tra=shaman_skill END
+
+	// 神术
+	LAF run STR_VAR file=spells file_loc=~shaman/lib~ tra=shaman_spell END
+	
+	// 高阶
+	LAF run STR_VAR file=hla file_loc=~shaman/lib~ tra=shaman_hla END
+	
+	// 脚本
+	LAF run STR_VAR file=scripts file_loc=~shaman/lib~ tra=shaman_hla END
+
+END

@@ -1,0 +1,27 @@
+2DA V1.0
+*
+        ABILITY       ICON        STRREF    MIN_LEV   MAX_LEVEL  NUM_ALLOWED  PREREQUISITE EXCLUDED_BY   ALIGNMENT_RESTRICT
+1       AP_c4QDGB1     *          *         1         99         1            *            AP_c4QDGC1    *
+2       AP_c4QDGB2     *          *         1         99         1            AP_c4QDGB1   *             *
+3       AP_c4QDGB3     *          *         1         99         1            AP_c4QDGB2   *             *
+4       AP_c4QDGB4     *          *         1         99         1            AP_c4QDGB3	 *             *
+5       AP_c4QDGB5     *          *         1         99         1            AP_c4QDGB4	 *             *
+6       AP_c4QDGB6     *          *         1         99         1            AP_c4QDGB5	 *             *
+7       AP_c4QDGB7     *          *         1         99         1            AP_c4QDGB6	 *             *
+8       AP_c4QDGB8     *          *         1         99         1            AP_c4QDGB7	 *             *
+9       AP_c4QDGC1     *          *         1         99         1            *            AP_c4QDGB1    *
+10      AP_c4QDGC2     *          *         1         99         1            AP_c4QDGC1   *             *
+11      AP_c4QDGC3     *          *         1         99         1            AP_c4QDGC2   *             *
+12      AP_c4QDGC4     *          *         1         99         1            AP_c4QDGC3	 *             *
+13      AP_c4QDGC5     *          *         1         99         1            AP_c4QDGC4	 *             *
+14      AP_c4QDGC6     *          *         1         99         1            AP_c4QDGC5	 *             *
+15      AP_c4QDGC7     *          *         1         99         1            AP_c4QDGC6	 *             *
+16      AP_c4QDGC8     *          *         1         99         1            AP_c4QDGC7	 *             *
+17      AP_c4QDGT1     *          *         1         99         1            AP_c4QDGBC	 *             *
+18      AP_c4QDGT2     *          *         1         99         1            AP_c4QDGBC	 *             *
+19      AP_c4QDGT3     *          *         1         99         1            AP_c4QDGBC	 *             *
+20      AP_c4QDGNA     *          *         1         99         20           *            *             *
+21      AP_c4QDGNB     *          *         1         99         20           *            *             *
+22      AP_c4QDGNC     *          *         1         99         20           *            *             *
+23         *           *          *         *         *          *            *            *             *
+24         *           *          *         *         *          *            *            *             *
