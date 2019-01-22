@@ -1,32 +1,32 @@
 
 DEFINE_ACTION_FUNCTION hla BEGIN
 
-	//Ê¥¹âÁìÖ÷
+	//åœ£å…‰é¢†ä¸»
 	COPY ~%SPELLS%/c4QBG1.spl~ override
 		SAY 0x08 @101
 		SAY 0x50 @102
 
-	//×¨×¢¹â»·
+	//ä¸“æ³¨å…‰ç¯
 	COPY ~%SPELLS%/c4QBG2.spl~ override
 		SAY 0x08 @103
 		SAY 0x50 @104
 
-	//ÖÎÓúÖ®¹â
+	//æ²»æ„ˆä¹‹å…‰
 	COPY ~%SPELLS%/c4QBG3.spl~ override
 		SAY 0x08 @105
 		SAY 0x50 @106
 
-	//ÉñÊ¥¹âÃ¢
+	//ç¥åœ£å…‰èŠ’
 	COPY ~%SPELLS%/c4QBG4.spl~ override
 		SAY 0x08 @107
 		SAY 0x50 @108
 
-	//¹âÖ®ÓÅÑÅ
+	//å…‰ä¹‹ä¼˜é›…
 	COPY ~%SPELLS%/c4QBG5.spl~ override
 		SAY 0x08 @109
 		SAY 0x50 @110
 
-	//Éñ¶÷
+	//ç¥æ©
 	COPY ~%SPELLS%/c4QBG6.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG60 END
 		SAY 0x08 @111
@@ -36,7 +36,7 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		SAY 0x08 @111
 		SAY 0x50 @113
 
-	//ÉñÊ¥Õğ»÷
+	//ç¥åœ£éœ‡å‡»
 	COPY ~%SPELLS%/c4QBG7.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG70 END
 		SAY 0x08 @114
@@ -46,7 +46,7 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		SAY 0x08 @114
 		SAY 0x50 @116
 
-	//ÉñÆô
+	//ç¥å¯
 	COPY ~%SPELLS%/c4QBG8.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG80 END
 		SAY 0x08 @117
@@ -62,7 +62,7 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 	COPY ~%SPELLS%/c4QBG8A.spl~ override
 		LPF ALTER_SPELL_HEADER INT_VAR projectile=c4QBAura END
 
-	//Ê¥ÁÆ
+	//åœ£ç–—
 	COPY ~%SPELLS%/c4QBG9.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG90 END
 		SAY 0x08 @120
@@ -72,22 +72,22 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		SAY 0x08 @120
 		SAY 0x50 @122
 
-	//´óÊ®×Ö¾ü
+	//å¤§åå­—å†›
 	COPY ~%SPELLS%/c4QBG10.spl~ override
 		SAY 0x08 @201
 		SAY 0x50 @202
 
-	//½£¶Ü×¨¾«
+	//å‰‘ç›¾ä¸“ç²¾
 	COPY ~%SPELLS%/c4QBG11.spl~ override
 		SAY 0x08 @301
 		SAY 0x50 @302
 
-	//ÍõÕß×£¸£
+	//ç‹è€…ç¥ç¦
 	COPY ~%SPELLS%/c4QBG12.spl~ override
 		SAY 0x08 @303
 		SAY 0x50 @304
 
-	//ÉñÊ¥¸ñµ²
+	//ç¥åœ£æ ¼æŒ¡
 	COPY ~%SPELLS%/c4QBG13.spl~ override
 		SAY 0x08 @305
 		SAY 0x50 @306
@@ -101,12 +101,12 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		END
 		LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=173 parameter1=100 parameter2=1 END
 
-	//ÉñÓÓÖ®Ìå
+	//ç¥ä½‘ä¹‹ä½“
 	COPY ~%SPELLS%/c4QBG14.spl~ override
 		SAY 0x08 @307
 		SAY 0x50 @308
 
-	//¸´³ğÖ®¶Ü
+	//å¤ä»‡ä¹‹ç›¾
 	COPY ~%SPELLS%/c4QBG15.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG150 END
 		SAY 0x08 @309
@@ -116,12 +116,12 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		SAY 0x08 @309
 		SAY 0x50 @311
 
-	//±Ó»¤Ö®ÊÖ
+	//åº‡æŠ¤ä¹‹æ‰‹
 	COPY ~%SPELLS%/c4QBG16.spl~ override
 		SAY 0x08 @312
 		SAY 0x50 @313
 
-	//¹«ÕıÖ®´¸
+	//å…¬æ­£ä¹‹é”¤
 	COPY ~%SPELLS%/c4QBG17.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG170 END
 		SAY 0x08 @314
@@ -135,23 +135,23 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		SAY 0x08 @314
 		SAY 0x0c @314
 
-	//Ë«ÊÖ½£×¨¾«
+	//åŒæ‰‹å‰‘ä¸“ç²¾
 	COPY ~%SPELLS%/c4QBG18.spl~ override
 		SAY 0x08 @401
 		SAY 0x50 @402
 
-	//¶¨×ï
+	//å®šç½ª
 	COPY ~%SPELLS%/c4QBG19.spl~ override
 		SAY 0x08 @403
 		SAY 0x50 @404
 
-	//ÃüÁîÊ¥Ó¡
+	//å‘½ä»¤åœ£å°
 	COPY ~%SPELLS%/c4QBG20.spl~ override
 		LPF CLONE_EFFECT INT_VAR match_opcode=143 opcode=177 parameter1=0 parameter2=2 STR_VAR resource=c4QBG20 END
 		SAY 0x08 @405
 		SAY 0x50 @406
 
-	//âã»Ú
+	//å¿æ‚”
 	COPY ~%SPELLS%/c4QBG21.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG210 END
 		SAY 0x08 @407
@@ -161,12 +161,12 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		SAY 0x08 @407
 		SAY 0x50 @409
 
-	//Ê¥¹â³öÇÊ
+	//åœ£å…‰å‡ºé˜
 	COPY ~%SPELLS%/c4QBG22.spl~ override
 		SAY 0x08 @410
 		SAY 0x50 @411
 
-	//Ê®×Ö¾ü´ò»÷
+	//åå­—å†›æ‰“å‡»
 	COPY ~%SPELLS%/c4QBG23.spl~ override
 		SAY 0x08 @412
 		SAY 0x50 @413
@@ -208,7 +208,7 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=4 level_multiplier=2 END
 		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=1 multi_dicenumber=1 END
 
-	//¸´³ğÖ®Å­
+	//å¤ä»‡ä¹‹æ€’
 	COPY ~%SPELLS%/c4QBG24.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QBG240 END
 		SAY 0x08 @416

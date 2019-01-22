@@ -3,7 +3,7 @@
                    ABILITY            ICON               STRREF             MIN_LEV            MAX_LEVEL          NUM_ALLOWED        PREREQUISITE       EXCLUDED_BY        ALIGNMENT_RESTRICT
 1                  AP_c4QAD0          *                  *                  1                  99                 1                  *                  AP_c4QAB0          *
 2                  AP_c4QAD1          *                  *                  1                  99                 5                  AP_c4QAD0          *                  *
-3                  AP_c4QAD2          *                  *                  1                  99                 5                  AP_c4QAD1          *                  *
+3                  AP_c4QAD2          *                  *                  1                  99                 3                  AP_c4QAD1          *                  *
 4                  AP_c4QAD3          *                  *                  1                  99                 20                 AP_c4QAD2          *                  *
 5                  AP_c4QAD4          *                  *                  1                  99                 20                 AP_c4QAD3          *                  *
 6                  AP_c4QAD5          *                  *                  1                  99                 1                  AP_c4QAD4          *                  *

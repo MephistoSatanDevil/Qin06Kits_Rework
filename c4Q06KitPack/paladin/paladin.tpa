@@ -13,14 +13,16 @@ DEFINE_ACTION_FUNCTION paladin BEGIN
 
 	COPY ~%Q06B%/bam~ override
 	COPY ~%Q06B%/2da~ override
-		// PRETTY_PRINT_2DA
+		PRETTY_PRINT_2DA
 	COPY ~%EFFECTS%/copy~ override
 	COPY ~%SPELLS%/copy~ override
+		WRITE_LONG 0x08 ~-1~
+		WRITE_LONG 0x50 ~-1~
 		
 	//add pro
 	COPY_EXISTING INAREANP.pro ~override/c4QBS8.pro~
-		WRITE_SHORT 0x204 43
-		WRITE_SHORT 0x206 43
+		WRITE_SHORT 0x204 85
+		WRITE_SHORT 0x206 85
 
 	COPY_EXISTING fireball.pro ~override/c4QBS9.pro~
 		WRITE_BYTE 0x200 (THIS BOR 0b01000000)
@@ -37,22 +39,22 @@ DEFINE_ACTION_FUNCTION paladin BEGIN
 	// addkit
 	LAF run STR_VAR file=add_kit file_loc=~paladin/lib~ tra=paladin_kit END
 
-	// ÃÏ∏≥ººƒ‹
+	// Â§©ËµãÊäÄËÉΩ
 	LAF run STR_VAR file=skills file_loc=~paladin/lib~ tra=paladin_skill END
 
-	// π‚ª∑
+	// ÂÖâÁéØ
 	LAF run STR_VAR file=aura file_loc=~paladin/lib~ tra=paladin_skill END
 
-	// ◊£∏£
+	// Á•ùÁ¶è
 	LAF run STR_VAR file=bless file_loc=~paladin/lib~ tra=paladin_skill END
 
-	//  •”°
+	// Âú£Âç∞
 	LAF run STR_VAR file=symbol file_loc=~paladin/lib~ tra=paladin_skill END
 
-	// …Ò ı
+	// Á•ûÊúØ
 	LAF run STR_VAR file=spells file_loc=~paladin/lib~ tra=paladin_spell END
 	
-	// ∏ﬂΩ◊
+	// È´òÈò∂
 	LAF run STR_VAR file=hla file_loc=~paladin/lib~ tra=paladin_hla END
 
 END

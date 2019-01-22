@@ -11,7 +11,7 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		SAY 0x08 @103
 		SAY 0x50 @104
 
-	//坚韧
+	//怒火专注
 	COPY ~%SPELLS%/c4QAD2.spl~ override
 		SAY 0x08 @105
 		SAY 0x50 @106
@@ -39,7 +39,7 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 		SAY 0x08 @113
 		SAY 0x50 @114
 
-	//怒火专注
+	//警戒
 	COPY ~%SPELLS%/c4QAD6.spl~ override
 		SAY 0x08 @115
 		SAY 0x50 @116

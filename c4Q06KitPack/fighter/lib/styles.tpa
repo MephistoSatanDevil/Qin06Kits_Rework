@@ -196,8 +196,7 @@ DEFINE_ACTION_FUNCTION styles BEGIN
 		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@35) END
 
 	//高阶
-	COPY_EXISTING c4QAM3A.eff ~override/c4QAM3AX.eff~
-		WRITE_SHORT 0x2e THIS - 15
+	COPY ~%SPELLS%/c4QAM3A.spl~ ~override/c4QAM3AX.spl~
 		
 	////防叠加, 切换移除
 	COPY_EXISTING_REGEXP GLOB ~c4QAM[123]0.spl~ override
@@ -208,11 +207,11 @@ DEFINE_ACTION_FUNCTION styles BEGIN
 	COPY_EXISTING c4QAM11.spl override
 		LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=c4QAM2AX END
 		LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=c4QAM2BX END
-		LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=c4QAM3A END
+		LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=c4QAM3AX END
 		
 	COPY_EXISTING_REGEXP GLOB ~c4QAM2[12].spl~ override
 		LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=c4QAM1AX END
-		LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=c4QAM3A END
+		LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=c4QAM3AX END
 		
 	COPY_EXISTING c4QAM31.spl override
 		LPF CLONE_EFFECT INT_VAR match_opcode=248 opcode=206 STR_VAR resource=c4QAM1AX END

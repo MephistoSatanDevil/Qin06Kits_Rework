@@ -13,6 +13,8 @@ DEFINE_ACTION_FUNCTION fighter BEGIN
 	COPY ~%Q06A%/bam~ override
 	COPY ~%EFFECTS%/copy~ override
 	COPY ~%SPELLS%/copy~ override
+		WRITE_LONG 0x08 ~-1~
+		WRITE_LONG 0x50 ~-1~
 
 	// addkit
 	LAF run STR_VAR file=add_kit file_loc=~fighter/lib~ tra=fighter_kit END
