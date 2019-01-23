@@ -9,7 +9,7 @@ call "%~dp0..\ModPackaging\utilities\ie_games.bat"
 :: /* 修改一下4个变量，指定Mod的名字、版本、作者名字和Mod目录名，前3项将出现在Windows的安装程序界面，请勿使用中文 */
 set "mod_name=QC Kitpack"
 set mod_version=v1.0
-set "mod_author=c4_angel & qinsisuo06"
+set mod_author=c4_angel
 set mod_folder=c4Q06KitPack
 
 :: /* 从以下项目中选择Mod所兼容的游戏环境并修改：*/
