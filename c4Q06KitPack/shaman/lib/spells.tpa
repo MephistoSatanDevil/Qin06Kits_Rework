@@ -457,7 +457,5 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 				LPF CLONE_EFFECT INT_VAR opcode=171 STR_VAR match_resource=c4QDT1 resource=~c4QD%type%%i%~ END
 			END
 		END
-		
-		// SPFSTRMI  SPICEIMP
 
 END
