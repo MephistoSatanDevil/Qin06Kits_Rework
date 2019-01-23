@@ -97,8 +97,7 @@ DEFINE_ACTION_FUNCTION styles BEGIN
 			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
 			PHP_EACH effect AS int => offset BEGIN
 				READ_SHORT offset opcode
-				READ_LONG offset+0x24 save
-				PATCH_IF opcode=272 BEGIN
+				PATCH_IF opcode=278 BEGIN
 					WRITE_LONG offset+0x4 thac0
 				END
 			END
@@ -166,15 +165,17 @@ DEFINE_ACTION_FUNCTION styles BEGIN
 		WRITE_ASCII 0x30 c4QAM2BX
 
 	COPY_EXISTING c4QAM2A.spl ~override/c4QAM2AX.spl~
-		LPF ALTER_EFFECT STR_VAR match_resource=~c4QAM2C~ resource=~c4QAM2CX~ END
+		// LPF ALTER_EFFECT STR_VAR match_resource=~c4QAM2C~ resource=~c4QAM2CX~ END
 	COPY_EXISTING c4QAM2B.spl ~override/c4QAM2BX.spl~
 		LPF ALTER_EFFECT INT_VAR match_opcode=285 parameter1=2 END
 		
+	/* 找到无法屏蔽低级旋风的原因之前使用两次伤害 
 	COPY ~%SPELLS%/c4QAM2C.spl~ ~override/c4QAM2CX.spl~
 		LPF ALTER_SPELL_HEADER INT_VAR projectile=c4QAM2C END
 		LPF ALTER_EFFECT INT_VAR dicenumber=2 END
 		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=4	level_multiplier=2 END
 		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=2 multi_parameter1=2 END
+	*/
 		
 	////防御姿态
 	COPY_EXISTING c4QAM3.itm override

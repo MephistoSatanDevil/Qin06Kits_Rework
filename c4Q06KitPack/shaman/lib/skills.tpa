@@ -189,20 +189,20 @@ DEFINE_ACTION_FUNCTION skills BEGIN
 			//武器上按等级添加技能，移除非本形态技能
 			COPY ~%ITEMS%/c4QDT%i%%type%.itm~ override
 				PHP_EACH TRANSFORM_ADD_SKILLS AS spell1 => spell2 BEGIN
-					LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=172 timing=1 parameter2=0 STR_VAR resource=~%spell2%~ END
+					LPF CLONE_EFFECT INT_VAR match_opcode=14 opcode=172 timing=1 STR_VAR resource=~%spell2%~ END
 					PATCH_IF ~%spell2%~ STRING_CONTAINS_REGEXP ~c4QDI%type%~ BEGIN
-						LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=206 timing=2 parameter2=0 STR_VAR resource=~%spell1%~ END
+						LPF CLONE_EFFECT INT_VAR match_opcode=14 opcode=206 timing=2 STR_VAR resource=~%spell1%~ END
 					END
 				END
 				PHP_EACH TRANSFORM_SKILLS AS spell => min BEGIN
 					PATCH_IF i >= min BEGIN
-						LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=146 timing=1 parameter2=0 STR_VAR resource=~c4QDI%type%%spell%~ END
+						LPF CLONE_EFFECT INT_VAR match_opcode=14 opcode=146 timing=1 STR_VAR resource=~c4QDI%type%%spell%~ END
 					END ELSE BEGIN
-						LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=206 parameter2=0 STR_VAR resource=~c4QDI%type%%spell%~ END
+						LPF CLONE_EFFECT INT_VAR match_opcode=14 opcode=206 STR_VAR resource=~c4QDI%type%%spell%~ END
 					END
 				END
 				PATCH_IF ~%type%~ STR_CMP B BEGIN
-					LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=206 parameter2=0 STR_VAR resource=~c4QDGNBA~ END
+					LPF CLONE_EFFECT INT_VAR match_opcode=14 opcode=206 STR_VAR resource=~c4QDGNBA~ END
 				END					
 				SET name=100+tra_ten*10+i
 				SAY 0x08 (AT name)
@@ -215,7 +215,7 @@ DEFINE_ACTION_FUNCTION skills BEGIN
 	/* 熊A：活力xA1，防龙翼IA0，其他形态移除 */
 	// 防龙翼
 	COPY_EXISTING_REGEXP ~c4QDT[1-4]A.itm~ override
-		LPF CLONE_EFFECT INT_VAR match_opcode=142 opcode=146 timing=1 parameter2=1 STR_VAR resource=c4QDIA0 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=14 opcode=146 timing=1 parameter2=1 STR_VAR resource=c4QDIA0 END
 	
 	// 其他形态移除
 	COPY_EXISTING_REGEXP ~c4QDT[1-4][BC].spl~ override ~c4QDT00.spl~ override
