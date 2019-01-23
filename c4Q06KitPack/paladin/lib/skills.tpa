@@ -1,6 +1,11 @@
 
 DEFINE_ACTION_FUNCTION skills BEGIN
 
+	//神圣干涉
+	COPY ~%SPELLS%/c4QB10.spl~ override
+		SAY 0x08 @1001
+		SAY 0x50 @1002
+
 	//圣盾术
 	COPY ~%SPELLS%/c4QB11.spl~ override
 		SAY 0x08 @11
