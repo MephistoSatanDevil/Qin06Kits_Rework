@@ -1,0 +1,203 @@
+
+DEFINE_ACTION_FUNCTION hla BEGIN
+
+	/* 平衡 */
+
+	////愤怒
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGB1.spl~
+		WRITE_ASCII 0x3a SPWI912B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDB1 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDB1X END
+		SAY 0x08 @111
+		SAY 0x50 @112
+
+	////月蚀
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGB2.spl~
+		WRITE_ASCII 0x3a SPWI903B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDB2 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDB2X END
+		SAY 0x08 @113
+		SAY 0x50 @114
+
+	////星火
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGB3.spl~
+		WRITE_ASCII 0x3a SPPR609B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDB3 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDB3X END
+		SAY 0x08 @115
+		SAY 0x50 @116
+
+	////台风
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGB4.spl~
+		WRITE_ASCII 0x3a SPPR716B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDB4 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDB4X END
+		SAY 0x08 @117
+		SAY 0x50 @118
+
+	////星涌
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGB5.spl~
+		WRITE_ASCII 0x3a SPPR612B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDB5 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDB5X END
+		SAY 0x08 @119
+		SAY 0x50 @120
+
+	////星界风暴
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGB6.spl~
+		WRITE_ASCII 0x3a SPPR722B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDB6 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDB6X END
+		SAY 0x08 @121
+		SAY 0x50 @122
+
+	////星辰碎片
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGB7.spl~
+		WRITE_ASCII 0x3a SPWI925B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDB7 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDB7X END
+		SAY 0x08 @123
+		SAY 0x50 @124
+
+	////自然威严
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGB8.spl~
+		WRITE_ASCII 0x3a SPPR450B
+		LPF CLONE_EFFECT INT_VAR match_opcode=172 opcode=313 STR_VAR resource=~c4QDGBC~ END
+		LPF CLONE_EFFECT INT_VAR match_opcode=172 opcode=62 parameter1=1 parameter2=0b01111111 STR_VAR resource=~~ END
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDB5X END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDB5Y END
+		PATCH_FOR_EACH type IN 1 2 3 BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=172 STR_VAR match_resource=c4QDB5X resource=~c4QDB%type%X~ END
+			LPF CLONE_EFFECT INT_VAR match_opcode=171 STR_VAR match_resource=c4QDB5Y resource=~c4QDB%type%Y~ END
+		END
+		SAY 0x08 @125
+		SAY 0x50 @126
+
+	/* 恢复 */
+
+	////回春
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGC1.spl~
+		WRITE_ASCII 0x3a SPWI201B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDC1 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDC1X END
+		LPF CLONE_EFFECT INT_VAR match_opcode=172 STR_VAR match_resource=c4QDC1 resource=c4QDC5 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=171 STR_VAR match_resource=c4QDC1X resource=c4QDC5G END
+		SAY 0x08 @211
+		SAY 0x50 @212
+
+	////自然赐福
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGC2.spl~
+		WRITE_ASCII 0x3a SPPR201B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDC2 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDC2X END
+		SAY 0x08 @213
+		SAY 0x50 @214
+
+	////生命绽放
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGC3.spl~
+		WRITE_ASCII 0x3a SPWI701B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDC3 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDC3X END
+		SAY 0x08 @215
+		SAY 0x50 @216
+
+	////治疗之触
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGC4.spl~
+		WRITE_ASCII 0x3a SPWI405B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDC4 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDC4X END
+		SAY 0x08 @217
+		SAY 0x50 @218
+
+	////迅捷治愈
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGC5.spl~
+		WRITE_ASCII 0x3a SPCL222B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDC5G END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDC5X END
+		SAY 0x08 @219
+		SAY 0x50 @220
+
+	////自然迅捷
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGC6.spl~
+		WRITE_ASCII 0x3a SPWI919B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDC6 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDC6X END
+		SAY 0x08 @221
+		SAY 0x50 @222
+
+	////英勇
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGC7.spl~
+		WRITE_ASCII 0x3a SPPR203B
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDC7 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDC7X END
+		SAY 0x08 @223
+		SAY 0x50 @224
+
+	////恩赐
+	COPY ~%SPELLS%/c4QDG00.spl~ ~override/c4QDGC8.spl~
+		WRITE_ASCII 0x3a SPPR712B
+		LPF CLONE_EFFECT INT_VAR match_opcode=172 opcode=313 STR_VAR resource=~c4QDGBC~ END
+		LPF CLONE_EFFECT INT_VAR match_opcode=172 opcode=62 parameter1=1 parameter2=0b01111111 STR_VAR resource=~~ END
+		LPF ALTER_EFFECT INT_VAR match_opcode=172 STR_VAR resource=c4QDC4X END
+		LPF ALTER_EFFECT INT_VAR match_opcode=171 STR_VAR resource=c4QDC4Y END
+		PATCH_FOR_EACH type IN 1 3 BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=172 STR_VAR match_resource=c4QDC4X resource=~c4QDC%type%X~ END
+			LPF CLONE_EFFECT INT_VAR match_opcode=171 STR_VAR match_resource=c4QDC4Y resource=~c4QDC%type%Y~ END
+		END
+		SAY 0x08 @225
+		SAY 0x50 @226
+
+	/* 变形 */
+
+	////熊
+	COPY ~%SPELLS%/c4QDG01.spl~ ~override/c4QDGT1.spl~
+		WRITE_ASCII 0x3a PLYBEA1B
+		LPF ALTER_EFFECT INT_VAR match_opcode=309 parameter1=0b001 END
+		SAY 0x08 @301
+		SAY 0x50 @302
+
+	////猫
+	COPY ~%SPELLS%/c4QDG01.spl~ ~override/c4QDGT2.spl~
+		WRITE_ASCII 0x3a PLYWOLFB
+		LPF ALTER_EFFECT INT_VAR match_opcode=309 parameter1=0b010 END
+		SAY 0x08 @303
+		SAY 0x50 @304
+
+	////树
+	COPY ~%SPELLS%/c4QDG01.spl~ ~override/c4QDGT3.spl~
+		WRITE_ASCII 0x3a PLYFLINB
+		LPF ALTER_EFFECT INT_VAR match_opcode=309 parameter1=0b100 END
+		SAY 0x08 @305
+		SAY 0x50 @306
+
+	/* 通用 */
+
+	////森林长者
+	COPY ~%SPELLS%/c4QDGNA.spl~ override
+		SAY 0x08 @311
+		SAY 0x50 @312
+
+	////丛林猎手
+	COPY ~%SPELLS%/c4QDGNB.spl~ override
+		SAY 0x08 @313
+		SAY 0x50 @314
+		
+	LAF CREATE_EFFECT INT_VAR opcode=146 duration=1 parameter2=1 STR_VAR name=c4QDGNBA resource=c4QDGNBA END
+
+	////元素之魂
+	COPY ~%SPELLS%/c4QDGNC.spl~ override
+		SAY 0x08 @315
+		SAY 0x50 @316
+		
+	/* 全神术移除暴击后IA效果 */
+	COPY_EXISTING_REGEXP ~.*\.spl~ override
+		READ_SHORT 0x1c spell_type
+		READ_BYTE 0x21 flag
+		PATCH_IF spell_type=2 && ((~%flag%~ BAND 0b10000000) = 0) BEGIN
+			PATCH_FOR_EACH level IN 1 2 3 5 BEGIN
+				LPF ADD_SPELL_CFEFFECT INT_VAR opcode=321 target=1 STR_VAR resource=~c4QDB%level%P~ END
+			END
+		END
+		BUT_ONLY
+
+END

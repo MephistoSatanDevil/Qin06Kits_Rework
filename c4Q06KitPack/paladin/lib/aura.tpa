@@ -1,0 +1,55 @@
+
+DEFINE_ACTION_FUNCTION aura BEGIN
+
+	//基础法术
+	COPY ~%SPELLS%/c4QBA.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=214 STR_VAR resource=c4QBA END
+		SAY 0x08 @41
+		SAY 0x50 @42
+
+	COPY ~%SPELLS%/c4QBA.spl~ ~override/c4QBAX.spl~
+		LPF ALTER_EFFECT STR_VAR match_resource=c4QBA resource=c4QBAX END
+		SAY 0x08 @41
+		SAY 0x50 @48
+	
+	//重复生效+移除前一效果
+	OUTER_FOR (i=1;i<6;++i) BEGIN
+		OUTER_SET name= i+42
+		OUTER_SET name= RESOLVE_STR_REF ((AT name))
+
+		//小图标
+		LAF cd_new_portrait_icon INT_VAR string=name STR_VAR bam_file=c4QBAura RET icon END
+
+		COPY ~%SPELLS%/c4QBA0.spl~ ~override/c4QBA%i%.spl~
+			FOR (j=1;j<6;++j) BEGIN
+				LPF CLONE_EFFECT INT_VAR match_opcode=141 opcode=321 timing=0 parameter2=0 STR_VAR resource=~c4QBA%j%~ END
+			END
+			LPF CLONE_EFFECT INT_VAR match_opcode=141 opcode=146 timing=1 parameter1=0 parameter2=2 STR_VAR resource=~c4QBA%i%A~ END
+			LPF CLONE_EFFECT INT_VAR match_opcode=141 opcode=272 timing=9 parameter1=2 parameter2=3 STR_VAR resource=~c4QBA%i%A~ END
+			LPF CLONE_EFFECT INT_VAR match_opcode=141 opcode=142 timing=9 parameter1=0 parameter2=icon END
+			WRITE_LONG 0x08 name
+	
+		COPY_EXISTING ~c4QBA%i%A.spl~ override
+			LPF ALTER_SPELL_HEADER INT_VAR projectile=c4QBAura END
+			FOR (j=1;j<6;++j) BEGIN
+				LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=321 STR_VAR resource=~c4QBA%j%A~ END
+			END
+	
+		COPY_EXISTING ~c4QBA%i%B.spl~ override
+			FOR (j=1;j<6;++j) BEGIN
+				LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=321 STR_VAR resource=~c4QBA%j%B~ END
+			END
+			
+	END
+		
+	//虔诚光环成长
+	COPY_EXISTING c4QBA1A.spl override c4QBA1B.spl override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=5	level_multiplier=5  END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=0 parameter1=1 multi_parameter1=1 END
+	
+	//重复生效效果
+	OUTER_FOR (i=1;i<6;++i) BEGIN
+		LAF CREATE_EFFECT INT_VAR opcode=146 target=1 duration=6 parameter2=1 STR_VAR resource=~c4QBA%i%A~ name=~c4QBA%i%A~ END
+	END
+
+END

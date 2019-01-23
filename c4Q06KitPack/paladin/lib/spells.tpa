@@ -1,0 +1,225 @@
+
+DEFINE_ACTION_FUNCTION spells BEGIN
+
+	////圣光术
+	//基础
+	COPY ~%SPELLS%/c4QBS1.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 dicesize=6 END
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=12 level_increment=2 level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 parameter1=9 multi_parameter1=1 dicenumber=9  multi_dicenumber=1 END
+		SAY 0x08 @101
+		SAY 0x50 @102
+		
+	//治愈之光
+	COPY ~%SPELLS%/c4QBS1.spl~ ~override/c4QBS1A.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=6 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=24 dicenumber=24 dicesize=6 END
+		SAY 0x08 @101
+		SAY 0x50 @103
+		
+	//神圣光芒
+	COPY ~%SPELLS%/c4QBS1.spl~ ~override/c4QBS1B.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=6 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 parameter2=1 probability1=50 STR_VAR resource=c4QBS11 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=24 dicenumber=24 dicesize=6 END
+		SAY 0x08 @101
+		SAY 0x50 @104
+		
+	COPY ~%SPELLS%/c4QBS11.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@105) END
+		
+	//光之优雅
+	COPY ~%SPELLS%/c4QBS1.spl~ ~override/c4QBS1C.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=6 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 parameter2=1 probability1=50 STR_VAR resource=c4QBS11 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 target=1 parameter2=1 STR_VAR resource=c4QBS12 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=24 dicenumber=24 dicesize=6 END
+		SAY 0x08 @101
+		SAY 0x50 @106
+		
+	COPY ~%SPELLS%/c4QBS12.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@107) END
+
+	////制裁之锤
+	COPY ~%SPELLS%/c4QBS2.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=12 level_increment=2	level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=9 multi_parameter1=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=39 duration=27 multi_duration=3 END
+		SAY 0x08 @108
+		SAY 0x50 @109
+
+	////纯净术
+	COPY ~%SPELLS%/c4QBS3.spl~ override
+		LPF ALTER_EFFECT INT_VAR power=0 END
+		SAY 0x08 @110
+		SAY 0x50 @111
+
+	////驱邪术
+	COPY ~%SPELLS%/c4QBS4.spl~ override
+		SAY 0x08 @112
+		SAY 0x50 @113
+		
+	COPY ~%SPELLS%/c4QBS4.spl~ ~override/c4QBS4A.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=0 END
+		LPF CLONE_EFFECT INT_VAR match_parameter2=3 opcode=146 parameter1=0 parameter2=1 END
+		LPF DELETE_EFFECT INT_VAR match_opcode=177 END
+		SAY 0x08 @112
+		SAY 0x50 @114
+
+	COPY ~%SPELLS%/c4QBS41.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=12	level_multiplier=1 END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET damage = (min_level=1) ? 11 : min_level
+			SET dice = (min_level=1) ? 5 : (min_level/2)
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				READ_LONG offset+0x24 save
+				PATCH_IF opcode=12 BEGIN
+					WRITE_LONG offset+0x1c dice
+				END
+				PATCH_IF opcode=12 && save=0 BEGIN
+					WRITE_LONG offset+4 damage
+				END
+			END
+		END
+		
+	COPY_EXISTING c4QBS41.spl ~override/c4QBS42.spl~
+		SAY 0x08 @112
+
+	////神圣愤怒
+	COPY ~%SPELLS%/c4QBS5.spl~ override
+		SAY 0x08 @115
+		SAY 0x50 @116
+		
+	COPY ~%SPELLS%/c4QBS5.spl~ ~override/c4QBS5A.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=0 END
+		LPF CLONE_EFFECT INT_VAR match_parameter2=3 opcode=146 parameter1=0 parameter2=1 END
+		LPF DELETE_EFFECT INT_VAR match_opcode=177 END
+		SAY 0x08 @115
+		SAY 0x50 @117
+		
+	COPY ~%SPELLS%/c4QBS51.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=14	level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=13 multi_dicenumber=1 END
+		
+	COPY_EXISTING c4QBS51.spl ~override/c4QBS52.spl~
+		SAY 0x08 @115
+
+	////净化术
+	COPY ~%SPELLS%/c4QBS6.spl~ override
+		LPF ALTER_EFFECT INT_VAR power=0 END
+		SAY 0x08 @118
+		SAY 0x50 @119
+		
+	////圣光闪现
+	//基础
+	COPY ~%SPELLS%/c4QBS7.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 dicesize=4 END
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=12 level_increment=6 level_multiplier=1 END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET point = (min_level=1) ? 6 : (min_level/2)
+			SET dice = (min_level=1) ? 13 : min_level
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				READ_LONG offset+0x24 save
+				PATCH_IF opcode=17 BEGIN
+					WRITE_LONG offset+4 point
+					WRITE_LONG offset+0x1c dice
+				END
+			END
+		END
+		SAY 0x08 @120
+		SAY 0x50 @121
+		
+	//治愈之光
+	COPY ~%SPELLS%/c4QBS7.spl~ ~override/c4QBS7A.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=3 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=11 dicenumber=22 dicesize=4 END
+		SAY 0x08 @120
+		SAY 0x50 @122
+		
+	//神圣光芒
+	COPY ~%SPELLS%/c4QBS7.spl~ ~override/c4QBS7B.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=3 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 parameter2=1 probability1=50 STR_VAR resource=c4QBS71 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=11 dicenumber=22 dicesize=4 END
+		SAY 0x08 @120
+		SAY 0x50 @123
+		
+	COPY ~%SPELLS%/c4QBS11.spl~ ~override/c4QBS71.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=5 dicenumber=11 dicesize=4 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@105) END
+		
+	////救赎之光
+	//基础
+	COPY ~%SPELLS%/c4QBS8.spl~ override
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 parameter2=1 STR_VAR resource=c4QBS81 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 dicesize=8 END
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=12 level_increment=8 level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 dicenumber=15 multi_dicenumber=1 END
+		SAY 0x08 @124
+		SAY 0x50 @125
+		
+	COPY ~%SPELLS%/c4QBS81.spl~ override
+		LPF ALTER_SPELL_HEADER INT_VAR projectile=c4QBS8 END
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=16 level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=15 multi_dicenumber=1 END
+		
+	//治愈之光
+	COPY ~%SPELLS%/c4QBS8.spl~ ~override/c4QBS8A.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=6 END
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 parameter2=1 STR_VAR resource=c4QBS82 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=0 dicenumber=26 dicesize=8 END
+		SAY 0x08 @124
+		SAY 0x50 @126
+
+	COPY ~%SPELLS%/c4QBS81.spl~ ~override/c4QBS82.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR projectile=c4QBS8 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=26 END
+
+	////奉献
+	COPY ~%SPELLS%/c4QBS9.spl~ override
+		LPF ALTER_SPELL_HEADER INT_VAR projectile=c4QBS9 END
+		FOR (i=1;i<6;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_timing=1 timing=4 duration=i STR_VAR insert=last END
+		END
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=12 level_increment=8 level_multiplier=1 END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET total = (min_level=1) ? 30 : (min_level*2+16)
+			SET left = 6
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_BYTE offset+0x0c timing
+				READ_LONG offset+0x0e duration
+				PATCH_IF left>1 BEGIN
+					SET damage=total/left
+					SET total -= damage
+					SET left -= 1
+					WRITE_LONG offset+4 damage
+				END ELSE BEGIN
+					WRITE_LONG offset+4 damage
+				END
+			END
+		END
+		SAY 0x08 @127
+		SAY 0x50 @128
+		
+	COPY_EXISTING c4QBS9.spl ~override/c4QBS9A.spl~
+		LPF ALTER_SPELL_HEADER INT_VAR speed=0 END
+		SAY 0x50 @129
+		
+	////添加至初始表格
+	COPY_EXISTING c4QB00.spl override
+		FOR (i=1;i<10;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=62 opcode=171 parameter1=0 parameter2=0 STR_VAR resource=~c4QBS%i%~ END
+		END
+
+END

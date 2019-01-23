@@ -1,0 +1,461 @@
+
+DEFINE_ACTION_FUNCTION spells BEGIN
+
+	/* 平衡 */
+
+	////愤怒
+	//基础
+	COPY ~%SPELLS%/c4QDB1.spl~ override
+		SAY 0x08 @111
+		SAY 0x50 @112
+
+	COPY ~%SPELLS%/c4QDB1A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 parameter1=1 multi_parameter1=1 END
+		
+	//强化
+	COPY_EXISTING c4QDB1.spl ~override/c4QDB1X.spl~
+		LPF ALTER_EFFECT INT_VAR power=3 STR_VAR resource=c4QDB1B END
+		SAY 0x50 @113
+
+	COPY ~%SPELLS%/c4QDB1A.spl~ ~override/c4QDB1B.spl~
+		LPF ALTER_EFFECT INT_VAR power=3 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=10 END
+		
+	//威严
+	COPY_EXISTING c4QDB1X.spl ~override/c4QDB1Y.spl~
+		LPF CLONE_EFFECT INT_VAR probability1=50 target=1 STR_VAR match_resource=c4QDB1B resource=c4QDB1P END
+		LPF CLONE_EFFECT INT_VAR probability1=50 STR_VAR match_resource=c4QDB1B resource=c4QDB1C END
+		LPF ALTER_EFFECT INT_VAR probability2=51 STR_VAR match_resource=c4QDB1B END
+		SAY 0x50 @114
+		
+	COPY_EXISTING c4QDB1B.spl ~override/c4QDB1C.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=15 END
+
+	COPY ~%SPELLS%/c4QDB0P.spl~ ~override/c4QDB1P.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@110) END
+		LPF ALTER_EFFECT INT_VAR match_opcode=189 parameter1=8 END
+
+	////月蚀
+	//基础
+	COPY ~%SPELLS%/c4QDB2.spl~ override
+		SAY 0x08 @121
+		SAY 0x50 @122
+
+	COPY ~%SPELLS%/c4QDB2A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 match_timing=1 dicenumber=1 multi_dicenumber=1 END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET damage= (min_level/4)+1
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				READ_BYTE offset+0xc timing
+				PATCH_IF opcode=12 && timing=4 BEGIN
+					WRITE_LONG offset+0x4 damage
+				END
+			END
+		END
+		
+	//强化
+	COPY_EXISTING c4QDB2.spl ~override/c4QDB2X.spl~
+		LPF ALTER_EFFECT INT_VAR power=4 STR_VAR resource=c4QDB2B END
+		SAY 0x50 @123
+
+	COPY ~%SPELLS%/c4QDB2A.spl~ ~override/c4QDB2B.spl~
+		LPF ALTER_EFFECT INT_VAR power=4 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 match_timing=1 dicenumber=20 dicesize=4 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 match_timing=4 parameter1=9 END
+		
+	//威严
+	COPY_EXISTING c4QDB2X.spl ~override/c4QDB2Y.spl~
+		LPF CLONE_EFFECT INT_VAR probability1=40 target=1 STR_VAR match_resource=c4QDB2B resource=c4QDB2P END
+		LPF CLONE_EFFECT INT_VAR probability1=40 STR_VAR match_resource=c4QDB2B resource=c4QDB2C END
+		LPF ALTER_EFFECT INT_VAR probability2=41 STR_VAR match_resource=c4QDB2B END
+		SAY 0x50 @124
+		
+	COPY_EXISTING c4QDB2B.spl ~override/c4QDB2C.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 match_timing=1 dicenumber=30 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 match_timing=4 parameter1=14 END
+
+	COPY ~%SPELLS%/c4QDB0P.spl~ ~override/c4QDB2P.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@110) END
+		LPF ALTER_EFFECT INT_VAR match_opcode=189 parameter1=7 END
+
+	////星火
+	//基础
+	COPY ~%SPELLS%/c4QDB3.spl~ override
+		SAY 0x08 @131
+		SAY 0x50 @132
+
+	COPY ~%SPELLS%/c4QDB3A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=1 multi_dicenumber=1 END
+		
+	//强化
+	COPY_EXISTING c4QDB3.spl ~override/c4QDB3X.spl~
+		LPF ALTER_EFFECT INT_VAR power=5 STR_VAR resource=c4QDB3B END
+		SAY 0x50 @133
+
+	COPY ~%SPELLS%/c4QDB3A.spl~ ~override/c4QDB3B.spl~
+		LPF ALTER_EFFECT INT_VAR power=5 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=20 dicesize=8 END
+		
+	//威严
+	COPY_EXISTING c4QDB3X.spl ~override/c4QDB3Y.spl~
+		LPF CLONE_EFFECT INT_VAR probability1=25 target=1 STR_VAR match_resource=c4QDB3B resource=c4QDB3P END
+		LPF CLONE_EFFECT INT_VAR probability1=25 STR_VAR match_resource=c4QDB3B resource=c4QDB3C END
+		LPF ALTER_EFFECT INT_VAR probability2=26 STR_VAR match_resource=c4QDB3B END
+		SAY 0x50 @134
+		
+	COPY_EXISTING c4QDB3B.spl ~override/c4QDB3C.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=30 END
+
+	COPY ~%SPELLS%/c4QDB0P.spl~ ~override/c4QDB3P.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@110) END
+		LPF ALTER_EFFECT INT_VAR match_opcode=189 parameter1=6 END
+
+	////台风
+	//基础
+	COPY ~%SPELLS%/c4QDB4.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=4 level_multiplier=2 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=1 multi_dicenumber=1 END
+		SAY 0x08 @141
+		SAY 0x50 @142
+		
+	//强化
+	COPY ~%SPELLS%/c4QDB4.spl~ ~override/c4QDB4X.spl~
+		LPF ALTER_EFFECT INT_VAR power=6 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=15 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=206 STR_VAR resource=c4QDB4X END
+		SAY 0x08 @141
+		SAY 0x50 @143
+
+	////星涌
+	//基础
+	COPY ~%SPELLS%/c4QDB5.spl~ override
+		SAY 0x08 @151
+		SAY 0x50 @152
+
+	COPY ~%SPELLS%/c4QDB5A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=12 dicenumber=1 multi_dicenumber=1 END
+		
+	//强化
+	COPY_EXISTING c4QDB5.spl ~override/c4QDB5X.spl~
+		LPF ALTER_EFFECT INT_VAR power=7 STR_VAR resource=c4QDB5B END
+		SAY 0x50 @153
+
+	COPY ~%SPELLS%/c4QDB5A.spl~ ~override/c4QDB5B.spl~
+		LPF ALTER_EFFECT INT_VAR power=7 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=20 dicesize=8 END
+		LPF ALTER_EFFECT INT_VAR savingthrow=0 savebonus=0 END
+		
+	//威严
+	COPY_EXISTING c4QDB5X.spl ~override/c4QDB5Y.spl~
+		LPF CLONE_EFFECT INT_VAR probability1=10 target=1 STR_VAR match_resource=c4QDB5B resource=c4QDB5P END
+		LPF CLONE_EFFECT INT_VAR probability1=10 STR_VAR match_resource=c4QDB5B resource=c4QDB5C END
+		LPF ALTER_EFFECT INT_VAR probability2=11 STR_VAR match_resource=c4QDB5B END
+		SAY 0x50 @154
+		
+	COPY_EXISTING c4QDB5B.spl ~override/c4QDB5C.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=30 END
+
+	COPY ~%SPELLS%/c4QDB0P.spl~ ~override/c4QDB5P.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@110) END
+		LPF ALTER_EFFECT INT_VAR match_opcode=189 parameter1=4 END
+
+	////星界风暴
+	//基础
+	COPY ~%SPELLS%/c4QDB6.spl~ override
+		SAY 0x08 @161
+		SAY 0x50 @162
+		
+	//强化
+	COPY_EXISTING c4QDB6.spl ~override/c4QDB6X.spl~
+		LPF ALTER_EFFECT INT_VAR power=8 END
+		LPF ALTER_EFFECT INT_VAR resist_dispel=0 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=2 END
+		SAY 0x50 @163
+
+	// COPY_EXISTING c4QDB6A.spl ~override/c4QDB6B.spl~
+		// LPF ALTER_EFFECT INT_VAR power=8 END
+		// LPF ALTER_EFFECT INT_VAR resist_dispel=0 END
+		// LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=2 END
+
+	////星辰碎片
+	//基础
+	COPY ~%SPELLS%/c4QDB7.spl~ override
+		SAY 0x08 @171
+		SAY 0x50 @172
+		
+	//强化
+	COPY_EXISTING c4QDB7.spl ~override/c4QDB7X.spl~
+		LPF ALTER_EFFECT INT_VAR power=9 STR_VAR resource=c4QDB7B END
+		SAY 0x50 @173
+
+	COPY_EXISTING c4QDB7A.spl ~override/c4QDB7B.spl~
+		LPF ALTER_EFFECT INT_VAR power=9 resist_dispel=0 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=10 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=146 STR_VAR resource=c4QDB7D END
+		LPF CLONE_EFFECT INT_VAR match_opcode=146 STR_VAR resource=c4QDB7E END
+		
+	COPY_EXISTING c4QDB7C.spl ~override/c4QDB7D.spl~
+		LPF ALTER_EFFECT INT_VAR power=9 resist_dispel=0 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=12 dicenumber=10 END
+		
+	COPY_EXISTING c4QDB1B.spl ~override/c4QDB7E.spl~
+		LPF ALTER_EFFECT INT_VAR resist_dispel=0 savingthrow=0 savebonus=0 END
+		SAY 0x08 @111
+
+	/* 恢复 */
+
+	////回春
+	//基础
+	COPY ~%SPELLS%/c4QDC1.spl~ override
+		SAY 0x08 @211
+		SAY 0x50 @212
+
+	COPY ~%SPELLS%/c4QDC1A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=2 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 parameter1=2 multi_parameter1=1 END
+		FOR (i=1;i<6;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
+			LPF CLONE_EFFECT INT_VAR match_opcode=139 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
+		END
+		
+	//强化
+	COPY_EXISTING c4QDC1.spl ~override/c4QDC1X.spl~
+		LPF ALTER_EFFECT STR_VAR resource=c4QDC1B END
+		SAY 0x50 @213
+
+	COPY ~%SPELLS%/c4QDC1A.spl~ ~override/c4QDC1B.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=18 END
+		FOR (i=1;i<6;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
+			LPF CLONE_EFFECT INT_VAR match_opcode=139 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
+		END
+		
+	//恩赐
+	COPY_EXISTING c4QDC1X.spl ~override/c4QDC1Y.spl~
+		LPF CLONE_EFFECT INT_VAR probability1=10 STR_VAR match_resource=c4QDC1B resource=c4QDC1C END
+		LPF CLONE_EFFECT INT_VAR target=1 probability1=10 STR_VAR match_resource=c4QDC1B resource=c4QDC1P END
+		LPF ALTER_EFFECT INT_VAR probability2=11 STR_VAR match_resource=c4QDC1B END
+		SAY 0x50 @214
+		
+	COPY_EXISTING c4QDC1B.spl ~override/c4QDC1C.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=27 END
+
+	COPY ~%SPELLS%/c4QDC0P.spl~ ~override/c4QDC1P.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@210) END
+		LPF ALTER_EFFECT INT_VAR match_opcode=261 parameter1=1 END
+
+	////自然赐福
+	//基础
+	COPY ~%SPELLS%/c4QDC2.spl~ override
+		SAY 0x08 @221
+		SAY 0x50 @222
+
+	COPY ~%SPELLS%/c4QDC2A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=8 level_multiplier=8 END
+		PATCH_FOR_EACH match_opcode IN 10 15 19 44 BEGIN
+			LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode parameter1=1 multi_parameter1=1 END
+		END
+		PATCH_FOR_EACH match_opcode IN 27 28 29 30 BEGIN
+			LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode parameter1=5 multi_parameter1=5 END
+		END
+		
+	//强化
+	COPY_EXISTING c4QDC2.spl ~override/c4QDC2X.spl~
+		LPF ALTER_EFFECT STR_VAR resource=c4QDC2B END
+		SAY 0x50 @223
+
+	COPY ~%SPELLS%/c4QDC2A.spl~ ~override/c4QDC2B.spl~
+		PATCH_FOR_EACH match_opcode IN 10 15 19 44 BEGIN
+			LPF ALTER_EFFECT INT_VAR match_opcode parameter1=5 END
+		END
+		PATCH_FOR_EACH match_opcode IN 27 28 29 30 BEGIN
+			LPF ALTER_EFFECT INT_VAR match_opcode parameter1=25 END
+		END
+
+	////生命绽放
+	//基础
+	COPY ~%SPELLS%/c4QDC3.spl~ override
+		SAY 0x08 @231
+		SAY 0x50 @232
+
+	COPY ~%SPELLS%/c4QDC3A.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 match_timing=4 parameter1= RESOLVE_STR_REF (@231) END
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=1 END
+		FOR (i=1;i<7;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i STR_VAR insert=last END
+		END
+		GET_OFFSET_ARRAY headers SPL_V10_HEADERS
+		PHP_EACH headers AS int => index BEGIN
+			READ_SHORT index+0x10 min_level
+			SET regen = min_level/5
+			SET bloom = min_level/2
+			GET_OFFSET_ARRAY2 effect index SPL_V10_HEAD_EFFECTS
+			PHP_EACH effect AS int => offset BEGIN
+				READ_SHORT offset opcode
+				READ_BYTE offset+0xc timing
+				READ_LONG offset+0xe duration
+				PATCH_IF opcode=17 BEGIN
+					PATCH_IF timing=1 || (timing=4 && duration<6) BEGIN
+						WRITE_LONG offset+0x04 regen
+						WRITE_LONG offset+0x1c 0
+					END ELSE BEGIN
+						WRITE_LONG offset+0x1c bloom
+						WRITE_LONG offset+0x20 6
+					END
+				END
+			END
+		END
+		
+	//强化
+	COPY_EXISTING c4QDC3.spl ~override/c4QDC3X.spl~
+		LPF ALTER_EFFECT STR_VAR resource=c4QDC3B END
+		WRITE_BYTE 0x7f 3
+		SAY 0x50 @233
+
+	COPY ~%SPELLS%/c4QDC3A.spl~ ~override/c4QDC3B.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=6 dicenumber=0 END
+		FOR (i=1;i<7;++i) BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i STR_VAR insert=last END
+		END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_timing=4 match_duration=6 parameter1=0 dicenumber=10 END
+		
+	//恩赐
+	COPY_EXISTING c4QDC3X.spl ~override/c4QDC3Y.spl~
+		LPF CLONE_EFFECT INT_VAR probability1=10 STR_VAR match_resource=c4QDC3B resource=c4QDC3C END
+		LPF CLONE_EFFECT INT_VAR target=1 probability1=10 STR_VAR match_resource=c4QDC3B resource=c4QDC3P END
+		LPF ALTER_EFFECT INT_VAR probability2=11 STR_VAR match_resource=c4QDC3B END
+		SAY 0x50 @234
+		
+	COPY_EXISTING c4QDC3B.spl ~override/c4QDC3C.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_parameter1=6 parameter1=9 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_duration=6 dicenumber=15 END
+
+	COPY ~%SPELLS%/c4QDC0P.spl~ ~override/c4QDC3P.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@210) END
+		LPF ALTER_EFFECT INT_VAR match_opcode=261 parameter1=3 END
+
+	////治疗之触
+	//基础
+	COPY ~%SPELLS%/c4QDC4.spl~ override
+		SAY 0x08 @241
+		SAY 0x50 @242
+
+	COPY ~%SPELLS%/c4QDC4A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=1 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 parameter1=2 multi_parameter1=2 dicenumber=2 multi_dicenumber=2 END
+		
+	//强化
+	COPY_EXISTING c4QDC4.spl ~override/c4QDC4X.spl~
+		LPF ALTER_EFFECT STR_VAR resource=c4QDC4B END
+		SAY 0x50 @243
+
+	COPY ~%SPELLS%/c4QDC4A.spl~ ~override/c4QDC4B.spl~
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=206 timing=0 duration=1 parameter1=0 STR_VAR resource=c4QDC4D END
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 parameter1=0 parameter2=1 STR_VAR resource=c4QDC4D END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=40 dicenumber=40 END
+		
+	//恩赐
+	COPY_EXISTING c4QDC4X.spl ~override/c4QDC4Y.spl~
+		LPF CLONE_EFFECT INT_VAR probability1=10 STR_VAR match_resource=c4QDC4B resource=c4QDC4C END
+		LPF CLONE_EFFECT INT_VAR target=1 probability1=10 STR_VAR match_resource=c4QDC4B resource=c4QDC4P END
+		LPF ALTER_EFFECT INT_VAR probability2=11 STR_VAR match_resource=c4QDC4B END
+		SAY 0x50 @244
+		
+	COPY_EXISTING c4QDC4B.spl ~override/c4QDC4C.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=60 dicenumber=60 END
+
+	COPY ~%SPELLS%/c4QDC0P.spl~ ~override/c4QDC4P.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@210) END
+		LPF ALTER_EFFECT INT_VAR match_opcode=261 parameter1=4 END
+
+	////迅捷治愈
+	//基础
+	COPY ~%SPELLS%/c4QDC5.spl~ override
+		SAY 0x08 @251
+		SAY 0x50 @252
+
+	COPY ~%SPELLS%/c4QDC5A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=2 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 parameter1=12 multi_parameter1=6 END
+		
+	//强化回春后版本
+	COPY_EXISTING c4QDC5.spl ~override/c4QDC5G.spl~
+		LPF ALTER_EFFECT STR_VAR match_resource=c4QDC5A resource=c4QDC5AG END
+		
+	COPY ~%SPELLS%/c4QDC5A.spl~ ~override/c4QDC5AG.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=321 STR_VAR resource=c4QDC1B END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=108 END
+		
+	//强化
+	COPY_EXISTING c4QDC5G.spl ~override/c4QDC5X.spl~
+		LPF ALTER_EFFECT STR_VAR resource=c4QDC5B END
+		SAY 0x50 @253
+		
+	COPY_EXISTING c4QDC5AG.spl ~override/c4QDC5B.spl~
+		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 target=1 parameter1=0 parameter2=1 STR_VAR resource=c4QDC5P END
+
+	COPY ~%SPELLS%/c4QDC0P.spl~ ~override/c4QDC5P.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=261 parameter1=5 END
+		LPF DELETE_EFFECT INT_VAR match_opcode=139 END
+
+	////自然迅捷
+	//基础
+	COPY ~%SPELLS%/c4QDC6.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=206 parameter1= RESOLVE_STR_REF (@265) END
+		SAY 0x08 @261
+		SAY 0x50 @262
+		
+	COPY ~%SPELLS%/c4QDC6A.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@264) END
+		
+	//强化
+	COPY_EXISTING c4QDC6.spl ~override/c4QDC6X.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=206 parameter1= RESOLVE_STR_REF (@266) STR_VAR resource=c4QDC6X END
+		LPF ALTER_EFFECT INT_VAR match_duration=120 duration=30 END
+		SAY 0x50 @263
+
+	////英勇
+	//基础
+	COPY ~%SPELLS%/c4QDC7.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=206 parameter1= RESOLVE_STR_REF (@275) END
+		SAY 0x08 @271
+		SAY 0x50 @272
+		
+	COPY ~%SPELLS%/c4QDC7A.spl~ override
+		PATCH_FOR_EACH class IN 1 7 10 13 14 17 19 BEGIN
+			LPF CLONE_EFFECT INT_VAR match_opcode=189 opcode=177 parameter1=class parameter2=5 STR_VAR resource=c4QDC7 END
+		END
+		
+	LAF CREATE_EFFECT INT_VAR opcode=189 parameter1=~-1~ duration=60 STR_VAR name=c4QDC7 END
+		
+	COPY ~%SPELLS%/c4QDC6A.spl~ ~override/c4QDC7V.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@274) END
+	
+	//强化
+	COPY_EXISTING c4QDC7.spl ~override/c4QDC7X.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=206 parameter1= RESOLVE_STR_REF (@276) STR_VAR resource=c4QDC7X END
+		LPF ALTER_EFFECT STR_VAR match_resource=c4QDC7A resource=c4QDC7B END
+		LPF ALTER_EFFECT INT_VAR match_duration=240 duration=120 END
+		SAY 0x50 @273
+		
+	COPY_EXISTING c4QDC7A.spl ~override/c4QDC7B.spl~
+		LPF ALTER_EFFECT INT_VAR match_opcode=189 parameter1=2 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=1 parameter1=1 END
+
+	//添加至初始表格
+	COPY_EXISTING c4QD00.spl override
+		PATCH_FOR_EACH type IN B C BEGIN
+			FOR (i=1;i<8;++i) BEGIN
+				LPF CLONE_EFFECT INT_VAR opcode=171 STR_VAR match_resource=c4QDT1 resource=~c4QD%type%%i%~ END
+			END
+		END
+
+END

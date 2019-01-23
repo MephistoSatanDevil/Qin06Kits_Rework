@@ -1,0 +1,45 @@
+
+DEFINE_ACTION_FUNCTION add_kit BEGIN
+
+	ADD_KIT ~c4Q06Shaman~
+	/* CLASWEAP.2DA */
+		~c4Q06Shaman 1 0 1 1 0 0 0 1~
+	/* WEAPPROF.2DA */
+		~c4Q06Shaman 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 1 1 0 0 0 1 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
+	/* ABCLASRQ.2DA */
+		~c4Q06Shaman 0 0 0 12 13 16~
+	/* ABCLSMOD.2DA */
+		~c4Q06Shaman -4 -4 -4 0 0 0~
+	/* ABDCDSRQ.2DA */
+		~c4Q06Shaman 0 0 0 0 0 0~
+	/* ABDCSCRQ.2DA */
+		~c4Q06Shaman 0 0 0 0 0 0~
+	/* ALIGNMNT.2DA */
+		~c4Q06Shaman 0 0 0 1 1 1 0 0 0~
+	/* DUALCLAS.2DA */
+		~c4Q06Shaman 0 0 0 0 0 0~
+	/* The path of abilities 2DA file */
+		~override/CLABc4QD.2da~
+	/* KITTABLE.2DA */
+		~K_SH_HE K_SH_HO~
+	/* KITLIST.2DA */
+		~0x00004000 21~
+	/* LUABBR.2DA */
+		~c4QD~
+	/* 25STWEAP.2DA */
+		~LEAT20 * HELM19 BAG27A RING06 RING31 CLCK02 BOOT01 AMUL19 BRAC14 BELT06 AROW11,40 BULL03,40 BOLT06,40 POTN52,5 POTN04,2 POTN14,5 DAGG12 STAF08 *~
+		SAY @1
+		SAY @2
+		SAY @3
+
+	LAF fl#add_kit_ee 
+		INT_VAR 
+			briefdesc= RESOLVE_STR_REF(@3)
+			fallen=0
+		STR_VAR
+			kit_name = ~c4Q06Shaman~
+			clsrcreq = ~0 0 1 0 0 0 1~
+	END
+
+
+END

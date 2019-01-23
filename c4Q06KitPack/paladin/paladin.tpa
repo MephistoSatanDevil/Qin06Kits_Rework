@@ -1,0 +1,60 @@
+DEFINE_ACTION_FUNCTION paladin BEGIN
+
+	OUTER_TEXT_SPRINT Q06B ~%mod_root%/paladin~
+	OUTER_TEXT_SPRINT CREATURES ~%Q06B%/cre~
+	OUTER_TEXT_SPRINT EFFECTS ~%Q06B%/eff~
+	OUTER_TEXT_SPRINT ITEMS ~%Q06B%/itm~
+	OUTER_TEXT_SPRINT SCRIPTS ~%Q06B%/baf~
+	OUTER_TEXT_SPRINT SPELLS ~%Q06B%/spl~
+
+	OUTER_TEXT_SPRINT workspace ~%workspace%/paladin~
+
+	INCLUDE ~%Q06B%/lib/haste_spells.tph~
+
+	COPY ~%Q06B%/bam~ override
+	COPY ~%Q06B%/2da~ override
+		PRETTY_PRINT_2DA
+	COPY ~%EFFECTS%/copy~ override
+	COPY ~%SPELLS%/copy~ override
+		WRITE_LONG 0x08 ~-1~
+		WRITE_LONG 0x50 ~-1~
+		
+	//add pro
+	COPY_EXISTING INAREANP.pro ~override/c4QBS8.pro~
+		WRITE_SHORT 0x204 85
+		WRITE_SHORT 0x206 85
+
+	COPY_EXISTING fireball.pro ~override/c4QBS9.pro~
+		WRITE_BYTE 0x200 (THIS BOR 0b01000000)
+		
+	COPY_EXISTING INAREAPA.pro ~override/c4QBAura.pro~
+		WRITE_SHORT 0x204 512
+		WRITE_SHORT 0x206 512
+		
+	ADD_PROJECTILE ~override/c4QBS9.pro~		
+	ADD_PROJECTILE ~override/c4QBS8.pro~		
+	ADD_PROJECTILE ~override/c4QBAura.pro~
+
+
+	// addkit
+	LAF run STR_VAR file=add_kit file_loc=~paladin/lib~ tra=paladin_kit END
+
+	// 天赋技能
+	LAF run STR_VAR file=skills file_loc=~paladin/lib~ tra=paladin_skill END
+
+	// 光环
+	LAF run STR_VAR file=aura file_loc=~paladin/lib~ tra=paladin_skill END
+
+	// 祝福
+	LAF run STR_VAR file=bless file_loc=~paladin/lib~ tra=paladin_skill END
+
+	// 圣印
+	LAF run STR_VAR file=symbol file_loc=~paladin/lib~ tra=paladin_skill END
+
+	// 神术
+	LAF run STR_VAR file=spells file_loc=~paladin/lib~ tra=paladin_spell END
+	
+	// 高阶
+	LAF run STR_VAR file=hla file_loc=~paladin/lib~ tra=paladin_hla END
+
+END

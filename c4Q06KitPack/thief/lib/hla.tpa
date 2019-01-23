@@ -1,0 +1,85 @@
+
+DEFINE_ACTION_FUNCTION hla BEGIN
+
+	//狂热
+	COPY ~%SPELLS%/c4QCG1.spl~ override
+		SAY 0x08 @101
+		SAY 0x50 @102
+
+	//灵巧
+	COPY ~%SPELLS%/c4QCG2.spl~ override
+		SAY 0x08 @103
+		SAY 0x50 @104
+
+	//幻影之舞
+	COPY ~%SPELLS%/c4QCG3.spl~ override
+		SAY 0x08 @105
+		SAY 0x50 @106
+		
+	COPY ~%SPELLS%/c4QCG3A.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@105) END
+
+	//轻弩·比尔吉沃特
+	COPY ~%SPELLS%/c4QCG4.spl~ override
+		SAY 0x08 @107
+		SAY 0x50 @108
+
+	//比尔吉沃特机簧扣
+	COPY ~%SPELLS%/c4QCG5.spl~ override
+		SAY 0x08 @109
+		SAY 0x50 @110
+
+	//破败王者
+	COPY ~%SPELLS%/c4QCG6.spl~ override
+		SAY 0x08 @111
+		SAY 0x50 @112
+
+	//重弩·逆十字
+	COPY ~%SPELLS%/c4QCG7.spl~ override
+		SAY 0x08 @113
+		SAY 0x50 @114
+
+	//十字机簧扣
+	COPY ~%SPELLS%/c4QCG8.spl~ override
+		SAY 0x08 @115
+		SAY 0x50 @116
+
+	//最后的轻语
+	COPY ~%SPELLS%/c4QCG9.spl~ override
+		SAY 0x08 @117
+		SAY 0x50 @118
+
+	//巨弩·暴风
+	COPY ~%SPELLS%/c4QCG10.spl~ override
+		SAY 0x08 @119
+		SAY 0x50 @120
+
+	//风暴机簧扣
+	COPY ~%SPELLS%/c4QCG11.spl~ override
+		SAY 0x08 @121
+		SAY 0x50 @122
+
+	//无尽
+	COPY ~%SPELLS%/c4QCG12.spl~ override
+		SAY 0x08 @123
+		SAY 0x50 @124
+		
+	COPY ~%SPELLS%/c4QCG12A.spl~ override
+		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@123) END
+
+	//精准
+	COPY ~%SPELLS%/c4QCG13.spl~ override
+		SAY 0x08 @125
+		SAY 0x50 @126
+
+	//贯穿
+	COPY ~%SPELLS%/c4QCG14.spl~ override
+		SAY 0x08 @127
+		SAY 0x50 @128
+
+	//强健
+	COPY ~%SPELLS%/c4QCG15.spl~ override
+		SAY 0x08 @129
+		SAY 0x50 @130
+
+END

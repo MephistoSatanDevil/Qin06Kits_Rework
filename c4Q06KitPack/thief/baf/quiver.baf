@@ -1,0 +1,49 @@
+
+// 检测戒指丢失
+IF
+	Kit(Player%PN%,c4Q06Thief)
+	LevelLT(Player%PN%,6)
+	!HasItemEquiped("c4QCQV0",Player%PN%)
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c4QCQV0",Player%PN%)
+END
+
+IF
+	Kit(Player%PN%,c4Q06Thief)
+	LevelGT(Player%PN%,5)
+	LevelLT(Player%PN%,12)
+	!HasItemEquiped("c4QCQV1",Player%PN%)
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c4QCQV1",Player%PN%)
+END
+
+IF
+	Kit(Player%PN%,c4Q06Thief)
+	LevelGT(Player%PN%,11)
+	LevelLT(Player%PN%,18)
+	!HasItemEquiped("c4QCQV2",Player%PN%)
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c4QCQV2",Player%PN%)
+END
+
+IF
+	Kit(Player%PN%,c4Q06Thief)
+	LevelGT(Player%PN%,17)
+	LevelLT(Player%PN%,24)
+	!HasItemEquiped("c4QCQV3",Player%PN%)
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c4QCQV3",Player%PN%)
+END
+
+IF
+	Kit(Player%PN%,c4Q06Thief)
+	LevelGT(Player%PN%,23)
+	!HasItemEquiped("c4QCQV4",Player%PN%)
+THEN
+	RESPONSE #100
+		ReallyForceSpellRES("c4QCQV4",Player%PN%)
+END

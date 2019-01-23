@@ -1,0 +1,54 @@
+
+DEFINE_ACTION_FUNCTION add_kit BEGIN
+
+	ADD_KIT ~c4Q06Paladin~
+	/* CLASWEAP.2DA */
+		~c4Q06Paladin 1 1 1 0 0 1 1 1~
+	/* WEAPPROF.2DA */
+		~c4Q06Paladin 2 2 0 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
+	/* ABCLASRQ.2DA */
+		~c4Q06Paladin 12 0 0 9 13 18~
+	/* ABCLSMOD.2DA */
+		~c4Q06Paladin 0 0 0 0 0 0~
+	/* ABDCDSRQ.2DA */
+		~c4Q06Paladin 0 0 0 0 0 0~
+	/* ABDCSCRQ.2DA */
+		~c4Q06Paladin 0 0 0 0 0 0~
+	/* ALIGNMNT.2DA */
+		~c4Q06Paladin 1 0 0 0 0 0 0 0 0~
+	/* DUALCLAS.2DA */
+		~c4Q06Paladin 0 0 0 0 0 0~
+	/* The path of abilities 2DA file */
+		~override/CLABc4QB.2da~
+	/* KITTABLE.2DA */
+		~K_P_H~
+	/* KITLIST.2DA */
+		~0x00004000 6~
+	/* LUABBR.2DA */
+		~c4QB~
+	/* 25STWEAP.2DA */
+		~* * * BAG29 RING06 RING31 * BOOT01 AMUL20 BRAC10 BELT06 * * * POTN52,5 POTN04,2 POTN14,5 * * *~
+		SAY @1
+		SAY @2
+		SAY @3
+
+	LAF fl#add_kit_ee 
+		INT_VAR 
+			briefdesc= RESOLVE_STR_REF(@3)
+			fallen=0
+		STR_VAR
+			kit_name = ~c4Q06Paladin~
+			clsrcreq = ~1 0 0 0 0 0 0~
+	END
+	
+	//防戒指丢失
+	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/observers.baf~
+		APPEND_FILE_EVALUATE ~%SCRIPTS%/ensure_ring.baf~
+		
+	LAF create_observer STR_VAR name=c4QB conditions=~Kit(Player%slot%,c4Q06Paladin)~ END
+
+	OUTER_FOR (PN=1;PN<7;++PN) BEGIN
+		EXTEND_BOTTOM ~c4QB%PN%.bcs~ ~%workspace%/observers.baf~ EVAL
+	END
+
+END

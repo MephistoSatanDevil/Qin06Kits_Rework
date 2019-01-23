@@ -1,0 +1,62 @@
+BACKUP ~_c4mods_external/c4Q06KitPack/backup~
+AUTHOR ~20829444@qq.com~
+
+VERSION ~v1.0~
+
+AUTO_EVAL_STRINGS
+
+README ~c4Q06KitPack/lang/%LANGUAGE%/readme.pdf~
+
+ALWAYS
+
+	OUTER_SPRINT mod_root c4Q06KitPack
+  OUTER_SPRINT base_language "schinese"
+  INCLUDE "c4Q06KitPack/lib/_immutatable.tph"
+	INCLUDE "c4Q06KitPack/lib/_always.tph"
+	
+END
+
+LANGUAGE 	~¼òÌåÖÐÎÄ~ 					
+					~schinese~
+					~c4Q06KitPack/lang/schinese/prompts/prompts-%WEIDU_OS%.tra~
+					~c4Q06KitPack/lang/schinese/setup.tra~
+
+///////////////////////////////////////////////////////////////////
+
+BEGIN @-1	
+DESIGNATED 1
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
+// DEPRECATED ~~
+
+LAF run STR_VAR file=fighter file_loc=fighter END
+
+///////////////////////////////////////////////////////////////////
+
+BEGIN @-2	
+DESIGNATED 2
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
+// DEPRECATED ~~
+
+LAF run STR_VAR file=paladin file_loc=paladin END
+
+///////////////////////////////////////////////////////////////////
+
+BEGIN @-3
+DESIGNATED 3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
+// DEPRECATED ~~
+
+LAF run STR_VAR file=thief file_loc=thief END
+
+///////////////////////////////////////////////////////////////////
+
+BEGIN @-4
+DESIGNATED 4
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
+// DEPRECATED ~~
+
+LAF run STR_VAR file=shaman file_loc=shaman END
+
+///////////////////////////////////////////////////////////////////
+
+

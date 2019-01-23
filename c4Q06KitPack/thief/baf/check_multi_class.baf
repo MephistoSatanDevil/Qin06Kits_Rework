@@ -1,0 +1,17 @@
+
+// 禁止兼职
+IF
+	Kit(Player%PN%,c4Q06Thief)
+	OR(4)
+		Class(Player%PN%,FIGHTER_THIEF)
+		Class(Player%PN%,FIGHTER_MAGE_THIEF)
+		Class(Player%PN%,MAGE_THIEF)
+		Class(Player%PN%,CLERIC_THIEF)
+THEN
+	RESPONSE #100
+		ActionOverride(Player%PN%,AddKit(TRUECLASS))
+		Wait(1)
+		DisplayStringHead(Player%PN%,@5)
+		ActionOverride(Player%PN%,PauseGame())
+END
+	
