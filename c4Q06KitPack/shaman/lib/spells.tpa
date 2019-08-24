@@ -105,9 +105,9 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		
 	//威严
 	COPY_EXISTING c4QDB3X.spl ~override/c4QDB3Y.spl~
-		LPF CLONE_EFFECT INT_VAR probability1=25 target=1 STR_VAR match_resource=c4QDB3B resource=c4QDB3P END
-		LPF CLONE_EFFECT INT_VAR probability1=25 STR_VAR match_resource=c4QDB3B resource=c4QDB3C END
-		LPF ALTER_EFFECT INT_VAR probability2=26 STR_VAR match_resource=c4QDB3B END
+		LPF CLONE_EFFECT INT_VAR probability1=30 target=1 STR_VAR match_resource=c4QDB3B resource=c4QDB3P END
+		LPF CLONE_EFFECT INT_VAR probability1=30 STR_VAR match_resource=c4QDB3B resource=c4QDB3C END
+		LPF ALTER_EFFECT INT_VAR probability2=31 STR_VAR match_resource=c4QDB3B END
 		SAY 0x50 @134
 		
 	COPY_EXISTING c4QDB3B.spl ~override/c4QDB3C.spl~
@@ -155,9 +155,9 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		
 	//威严
 	COPY_EXISTING c4QDB5X.spl ~override/c4QDB5Y.spl~
-		LPF CLONE_EFFECT INT_VAR probability1=10 target=1 STR_VAR match_resource=c4QDB5B resource=c4QDB5P END
-		LPF CLONE_EFFECT INT_VAR probability1=10 STR_VAR match_resource=c4QDB5B resource=c4QDB5C END
-		LPF ALTER_EFFECT INT_VAR probability2=11 STR_VAR match_resource=c4QDB5B END
+		LPF CLONE_EFFECT INT_VAR probability1=15 target=1 STR_VAR match_resource=c4QDB5B resource=c4QDB5P END
+		LPF CLONE_EFFECT INT_VAR probability1=15 STR_VAR match_resource=c4QDB5B resource=c4QDB5C END
+		LPF ALTER_EFFECT INT_VAR probability2=16 STR_VAR match_resource=c4QDB5B END
 		SAY 0x50 @154
 		
 	COPY_EXISTING c4QDB5B.spl ~override/c4QDB5C.spl~
@@ -222,8 +222,8 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=2 END
 		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 parameter1=2 multi_parameter1=1 END
 		FOR (i=1;i<6;++i) BEGIN
-			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
-			LPF CLONE_EFFECT INT_VAR match_opcode=139 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
+			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i*4 STR_VAR insert=last END
+			LPF CLONE_EFFECT INT_VAR match_opcode=139 match_timing=1 timing=4 duration=i*4 STR_VAR insert=last END
 		END
 		
 	//强化
@@ -234,8 +234,8 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 	COPY ~%SPELLS%/c4QDC1A.spl~ ~override/c4QDC1B.spl~
 		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=18 END
 		FOR (i=1;i<6;++i) BEGIN
-			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
-			LPF CLONE_EFFECT INT_VAR match_opcode=139 match_timing=1 timing=4 duration=i*3 STR_VAR insert=last END
+			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i*4 STR_VAR insert=last END
+			LPF CLONE_EFFECT INT_VAR match_opcode=139 match_timing=1 timing=4 duration=i*4 STR_VAR insert=last END
 		END
 		
 	//恩赐
@@ -321,11 +321,11 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		SAY 0x50 @233
 
 	COPY ~%SPELLS%/c4QDC3A.spl~ ~override/c4QDC3B.spl~
-		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=6 dicenumber=0 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=2 dicenumber=0 END
 		FOR (i=1;i<7;++i) BEGIN
 			LPF CLONE_EFFECT INT_VAR match_opcode=17 match_timing=1 timing=4 duration=i STR_VAR insert=last END
 		END
-		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_timing=4 match_duration=6 parameter1=0 dicenumber=10 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_timing=4 match_duration=6 parameter1=0 dicenumber=6 END
 		
 	//恩赐
 	COPY_EXISTING c4QDC3X.spl ~override/c4QDC3Y.spl~
@@ -335,8 +335,8 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		SAY 0x50 @234
 		
 	COPY_EXISTING c4QDC3B.spl ~override/c4QDC3C.spl~
-		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_parameter1=6 parameter1=9 END
-		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_duration=6 dicenumber=15 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_parameter1=2 parameter1=3 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 match_duration=6 dicenumber=9 END
 
 	COPY ~%SPELLS%/c4QDC0P.spl~ ~override/c4QDC3P.spl~
 		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@210) END
@@ -350,7 +350,7 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 
 	COPY ~%SPELLS%/c4QDC4A.spl~ override
 		LPF CREATE_HEADERS_AS_LEVEL INT_VAR max_level=20 level_increment=2 level_multiplier=1 END
-		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 parameter1=2 multi_parameter1=2 dicenumber=2 multi_dicenumber=2 END
+		LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode=17 parameter1=2 multi_parameter1=2 dicenumber=1 multi_dicenumber=1 END
 		
 	//强化
 	COPY_EXISTING c4QDC4.spl ~override/c4QDC4X.spl~
@@ -360,7 +360,7 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 	COPY ~%SPELLS%/c4QDC4A.spl~ ~override/c4QDC4B.spl~
 		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=206 timing=0 duration=1 parameter1=0 STR_VAR resource=c4QDC4D END
 		LPF CLONE_EFFECT INT_VAR match_opcode=17 opcode=146 parameter1=0 parameter2=1 STR_VAR resource=c4QDC4D END
-		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=40 dicenumber=40 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=40 dicenumber=20 END
 		
 	//恩赐
 	COPY_EXISTING c4QDC4X.spl ~override/c4QDC4Y.spl~
@@ -370,7 +370,7 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		SAY 0x50 @244
 		
 	COPY_EXISTING c4QDC4B.spl ~override/c4QDC4C.spl~
-		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=60 dicenumber=60 END
+		LPF ALTER_EFFECT INT_VAR match_opcode=17 parameter1=60 dicenumber=30 END
 
 	COPY ~%SPELLS%/c4QDC0P.spl~ ~override/c4QDC4P.spl~
 		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@210) END
@@ -410,11 +410,16 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 	//基础
 	COPY ~%SPELLS%/c4QDC6.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=206 parameter1= RESOLVE_STR_REF (@265) END
+		LPF CLONE_EFFECT INT_VAR match_opcode=146 timing=1 duraiton=0 STR_VAR resource=c4QDC6P END
 		SAY 0x08 @261
 		SAY 0x50 @262
 		
 	COPY ~%SPELLS%/c4QDC6A.spl~ override
 		LPF ALTER_EFFECT INT_VAR match_opcode=139 parameter1= RESOLVE_STR_REF (@264) END
+
+	COPY ~%SPELLS%/c4QDB0P.spl~ ~override/c4QDC6P.spl~
+		LPF DELETE_EFFECT INT_VAR match_opcode=139 END
+		LPF DELETE_EFFECT INT_VAR match_opcode=189 END
 		
 	//强化
 	COPY_EXISTING c4QDC6.spl ~override/c4QDC6X.spl~
@@ -430,7 +435,8 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		SAY 0x50 @272
 		
 	COPY ~%SPELLS%/c4QDC7A.spl~ override
-		PATCH_FOR_EACH class IN 1 7 10 13 14 17 19 BEGIN
+		//ee中术士被视为法师，无须写19否则双重计算 ???
+		PATCH_FOR_EACH class IN 1 7 10 13 14 17 BEGIN
 			LPF CLONE_EFFECT INT_VAR match_opcode=189 opcode=177 parameter1=class parameter2=5 STR_VAR resource=c4QDC7 END
 		END
 		

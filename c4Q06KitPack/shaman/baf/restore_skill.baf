@@ -2,14 +2,23 @@
 // 恢复技能
 IF
 	PartyRested()
-	Kit(Player%PN%,c4Q06Shaman)
-	!GlobalTimerNotExpired("c4QD_Restore_Skill_Player%PN%","Global")
+	Kit(Player%slot%,c4Q06Shaman)
+	!GlobalTimerNotExpired("c4QD_Restore_Skill_Player%slot%","Global")
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QDI000",Player%PN%)
+		ReallyForceSpellRES("c4QDI000",Player%slot%)
 		Wait(1)
-		ReallyForceSpellRES("c4QDI001",Player%PN%)
-		SetGlobalTimer("c4QD_Restore_Skill_Player%PN%","Global",EIGHT_HOURS)
+		ReallyForceSpellRES("c4QDI001",Player%slot%)
+		SetGlobalTimer("c4QD_Restore_Skill_Player%slot%","Global",EIGHT_HOURS)
+		Continue()
+END
+
+IF
+	!Kit(Player%slot%,c4Q06Shaman)
+	GlobalTimerNotExpired("c4QD_Restore_Skill_Player%slot%","Global")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("c4QD_Restore_Skill_Player%slot%","Global",0)
 		Continue()
 END
 

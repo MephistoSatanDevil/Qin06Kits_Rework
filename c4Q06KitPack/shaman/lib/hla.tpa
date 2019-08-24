@@ -197,6 +197,8 @@ DEFINE_ACTION_FUNCTION hla BEGIN
 			PATCH_FOR_EACH level IN 1 2 3 5 BEGIN
 				LPF ADD_SPELL_CFEFFECT INT_VAR opcode=321 target=1 STR_VAR resource=~c4QDB%level%P~ END
 			END
+			//自然迅捷
+			LPF ADD_SPELL_CFEFFECT INT_VAR opcode=321 target=1 STR_VAR resource=~c4QDC6P~ END
 		END
 		BUT_ONLY
 

@@ -1,31 +1,33 @@
 
 // 检测戒指丢失
 IF
-	Kit(Player%PN%,c4Q06Paladin)
-	TriggerOverride(Player%PN%,Global("c4QB_Symbol_1X","Locals",0))
-	!HasItemEquiped("c4QBM0",Player%PN%)
-	!HasItemEquiped("c4QBM1",Player%PN%)
-	!HasItemEquiped("c4QBM2",Player%PN%)
-	!HasItemEquiped("c4QBM3",Player%PN%)
-	!HasItemEquiped("c4QBM0X",Player%PN%)
-	!HasItemEquiped("c4QBM1X",Player%PN%)
-	!HasItemEquiped("c4QBM2X",Player%PN%)
-	!HasItemEquiped("c4QBM3X",Player%PN%)
+	Kit(Player%slot%,c4Q06Paladin)
+	TriggerOverride(Player%slot%,Global("c4QB_Symbol_1X","Locals",0))
+	!HasItemEquiped("c4QBM0",Player%slot%)
+	!HasItemEquiped("c4QBM1",Player%slot%)
+	!HasItemEquiped("c4QBM2",Player%slot%)
+	!HasItemEquiped("c4QBM3",Player%slot%)
+	!HasItemEquiped("c4QBM0X",Player%slot%)
+	!HasItemEquiped("c4QBM1X",Player%slot%)
+	!HasItemEquiped("c4QBM2X",Player%slot%)
+	!HasItemEquiped("c4QBM3X",Player%slot%)
 THEN
 	RESPONSE #100
-		DisplayStringHead(Player%PN%,@4)
-		ReallyForceSpellRES("c4QB02",Player%PN%)
+		DisplayStringHead(Player%slot%,@4)
+		ReallyForceSpellRES("c4QB02",Player%slot%)
+		Continue()
 END
 
 IF
-	Kit(Player%PN%,c4Q06Paladin)
-	TriggerOverride(Player%PN%,Global("c4QB_Symbol_1X","Locals",1))
-	!HasItemEquiped("c4QBM0X",Player%PN%)
-	!HasItemEquiped("c4QBM1X",Player%PN%)
-	!HasItemEquiped("c4QBM2X",Player%PN%)
-	!HasItemEquiped("c4QBM3X",Player%PN%)
+	Kit(Player%slot%,c4Q06Paladin)
+	TriggerOverride(Player%slot%,Global("c4QB_Symbol_1X","Locals",1))
+	!HasItemEquiped("c4QBM0X",Player%slot%)
+	!HasItemEquiped("c4QBM1X",Player%slot%)
+	!HasItemEquiped("c4QBM2X",Player%slot%)
+	!HasItemEquiped("c4QBM3X",Player%slot%)
 THEN
 	RESPONSE #100
-		DisplayStringHead(Player%PN%,@4)
-		ReallyForceSpellRES("c4QB02X",Player%PN%)
+		DisplayStringHead(Player%slot%,@4)
+		ReallyForceSpellRES("c4QB02X",Player%slot%)
+		Continue()
 END

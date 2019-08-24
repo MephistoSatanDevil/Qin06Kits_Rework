@@ -41,14 +41,21 @@ DEFINE_ACTION_FUNCTION add_kit BEGIN
 	END
 	
 	//防兼职, 防戒指丢失
-	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/observers.baf~
-		APPEND_FILE_EVALUATE ~%SCRIPTS%/check_multi_class.baf~
+	COPY ~%SCRIPTS%/check_multi_class.baf~ ~%workspace%/observers.baf~
 		APPEND_FILE_EVALUATE ~%SCRIPTS%/ensure_ring.baf~
+
+	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/extend.baf~
+		FOR (slot=1;slot<7;++slot) BEGIN
+			APPEND_FILE_EVALUATE ~%workspace%/observers.baf~
+		END
+
+	EXTEND_TOP_REGEXP ~baldur.*\.bcs~ ~%workspace%/extend.baf~
 		
+	/*
 	LAF create_observer STR_VAR name=c4QA conditions=~Kit(Player%slot%,c4Q06Fighter)~ END
 
 	OUTER_FOR (PN=1;PN<7;++PN) BEGIN
 		EXTEND_BOTTOM ~c4QA%PN%.bcs~ ~%workspace%/observers.baf~ EVAL
 	END
-
+	*/
 END

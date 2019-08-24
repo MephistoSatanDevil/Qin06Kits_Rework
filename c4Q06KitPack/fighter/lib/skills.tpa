@@ -25,12 +25,34 @@ DEFINE_ACTION_FUNCTION skills BEGIN
 		SAY 0x50 @44
 		
 	COPY ~%SPELLS%/c4QAS2A.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=6 level_multiplier=3 END
+		PATCH_FOR_EACH match_opcode IN 232 142 215 BEGIN
+			LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode duration=6 multi_duration=6 END
+		END
 		SAY 0x08 @45
 		
 	COPY ~%SPELLS%/c4QAS2B.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=10 level_multiplier=5 END
+		PATCH_FOR_EACH match_opcode IN 142 27 28 29 30 31 86 87 88 89 301 9 BEGIN
+			LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode duration=6 multi_duration=6 END
+		END
 		SAY 0x08 @46
 		
 	COPY ~%SPELLS%/c4QAS2C.spl~ override
+		LPF CREATE_HEADERS_AS_LEVEL INT_VAR level_increment=8 level_multiplier=4 END
+		PATCH_FOR_EACH match_opcode IN 142 27 28 29 30 31 86 87 88 89 9 BEGIN
+			LPF ALTER_HEADER_EFFECTS_AS_LEVEL INT_VAR match_opcode duration=36 multi_duration=6 END
+		END
 		SAY 0x08 @47
+
+	COPY_EXISTING spwish12.spl override c4qas2c.spl override
+		PATCH_IF ~%SOURCE_RES%~ STR_EQ spwish12 BEGIN
+			SPRINT clear c4qas2c
+		END ELSE SPRINT clear spwish12
+		LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=321 target=2 STR_VAR resource=~%clear%~ END
+		BUT_ONLY
+
+	COPY_EXISTING_REGEXP GLOB ~c4QAS2[ABC].spl~ override
+		LPF ALTER_EFFECT INT_VAR check_globals=0 target=2 END
 
 END

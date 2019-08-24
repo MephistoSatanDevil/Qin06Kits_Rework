@@ -1,19 +1,20 @@
 
 // 禁止兼职
 IF
-	Kit(Player%PN%,c4Q06Fighter)
+	Kit(Player%slot%,c4Q06Fighter)
 	OR(6)
-		Class(Player%PN%,FIGHTER_MAGE)
-		Class(Player%PN%,FIGHTER_CLERIC)
-		Class(Player%PN%,FIGHTER_THIEF)
-		Class(Player%PN%,FIGHTER_MAGE_THIEF)
-		Class(Player%PN%,FIGHTER_DRUID)
-		Class(Player%PN%,FIGHTER_MAGE_CLERIC)
+		Class(Player%slot%,FIGHTER_MAGE)
+		Class(Player%slot%,FIGHTER_CLERIC)
+		Class(Player%slot%,FIGHTER_THIEF)
+		Class(Player%slot%,FIGHTER_MAGE_THIEF)
+		Class(Player%slot%,FIGHTER_DRUID)
+		Class(Player%slot%,FIGHTER_MAGE_CLERIC)
 THEN
 	RESPONSE #100
-		ActionOverride(Player%PN%,AddKit(TRUECLASS))
+		ActionOverride(Player%slot%,AddKit(TRUECLASS))
 		Wait(1)
-		DisplayStringHead(Player%PN%,@5)
-		ActionOverride(Player%PN%,PauseGame())
+		DisplayStringHead(Player%slot%,@5)
+		ActionOverride(Player%slot%,PauseGame())
+		Continue()
 END
 	

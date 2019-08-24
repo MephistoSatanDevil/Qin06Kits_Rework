@@ -1,9 +1,10 @@
 
 IF
-	Kit(Player%PN%,c4Q06Shaman)
-	TriggerOverride(Player%PN%, Global("c4QDGT4","Locals",%type%))
-	!TriggerOverride(Player%PN%, HaveKnownSpellRES("%spell1%"))
+	Kit(Player%slot%,c4Q06Shaman)
+	TriggerOverride(Player%slot%, Global("c4QDGT4","Locals",%type%))
+	!TriggerOverride(Player%slot%, HaveKnownSpellRES("%spell1%"))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("%spell2%",Player%PN%)
+		ReallyForceSpellRES("%spell2%",Player%slot%)
+		Continue()
 END

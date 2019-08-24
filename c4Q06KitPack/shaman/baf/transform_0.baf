@@ -1,34 +1,37 @@
 
 // 变形技能1-3
 IF
-	Kit(Player%PN%,c4Q06Shaman)
-	TriggerOverride(Player%PN%, Global("c4QDGT4","Locals",0))
-	LevelLT(Player%PN%,10)
-	!TriggerOverride(Player%PN%, HaveKnownSpellRES("c4QDT1"))
+	Kit(Player%slot%,c4Q06Shaman)
+	TriggerOverride(Player%slot%, Global("c4QDGT4","Locals",0))
+	LevelLT(Player%slot%,10)
+	!TriggerOverride(Player%slot%, HaveKnownSpellRES("c4QDT1"))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QDT1_",Player%PN%)
+		ReallyForceSpellRES("c4QDT1_",Player%slot%)
+		Continue()
 END
 
 IF
-	Kit(Player%PN%,c4Q06Shaman)
-	TriggerOverride(Player%PN%, Global("c4QDGT4","Locals",0))
-	LevelGT(Player%PN%,9)
-	LevelLT(Player%PN%,14)
-	!TriggerOverride(Player%PN%, HaveKnownSpellRES("c4QDT2"))
+	Kit(Player%slot%,c4Q06Shaman)
+	TriggerOverride(Player%slot%, Global("c4QDGT4","Locals",0))
+	LevelGT(Player%slot%,9)
+	LevelLT(Player%slot%,14)
+	!TriggerOverride(Player%slot%, HaveKnownSpellRES("c4QDT2"))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QDT2_",Player%PN%)
+		ReallyForceSpellRES("c4QDT2_",Player%slot%)
+		Continue()
 END
 
 IF
-	Kit(Player%PN%,c4Q06Shaman)
-	TriggerOverride(Player%PN%, Global("c4QDGT4","Locals",0))
-	LevelGT(Player%PN%,13)
-	!TriggerOverride(Player%PN%, HaveKnownSpellRES("c4QDT3"))
+	Kit(Player%slot%,c4Q06Shaman)
+	TriggerOverride(Player%slot%, Global("c4QDGT4","Locals",0))
+	LevelGT(Player%slot%,13)
+	!TriggerOverride(Player%slot%, HaveKnownSpellRES("c4QDT3"))
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QDT3_",Player%PN%)
+		ReallyForceSpellRES("c4QDT3_",Player%slot%)
+		Continue()
 END
 
 // 变形技能4?

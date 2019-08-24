@@ -749,7 +749,7 @@ IF
 	%conditions%
 THEN
 	RESPONSE #100
-		SetGlobalTimer("%name%%slot%_Exists_Timer","Global",1)
+		SetGlobalTimer("%name%%slot%_Exists_Timer","Global",3)
 END
 
 IF
