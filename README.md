@@ -1,4 +1,4 @@
-[简述](README.md) | [更新历史](CHANGELOG.md) | [战争领主](README-FIGHTER.md) | [白银之手](README-PALADIN.md) | [暗夜猎手](README-THIEF.md) | [自然之心](README-SHAMAN.md)
+[简述](README.md) | [战争领主](README-FIGHTER.md) | [白银之手](README-PALADIN.md) | [暗夜猎手](README-THIEF.md) | [自然之心](README-SHAMAN.md) | [更新历史](CHANGELOG.md)
 
 # QC宗派系列
 
@@ -34,9 +34,3 @@
 - 具备变形为熊、猫与树人的能力，以及特色法术
 - 特色鲜明并互相独立的两系高阶技能：平衡与恢复，以及终极形态的变形能力和一些通用高阶能力
 - 无法使用萨满之舞；无法从铁皮术中得到保护，也无法用神术或物品召唤其他生物
-
-
-## 更新历史
-
-- VERSION 1.0 2019.01.23
-	- 初版完成
