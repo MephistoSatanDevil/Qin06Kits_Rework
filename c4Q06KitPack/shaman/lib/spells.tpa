@@ -435,7 +435,8 @@ DEFINE_ACTION_FUNCTION spells BEGIN
 		SAY 0x50 @272
 		
 	COPY ~%SPELLS%/c4QDC7A.spl~ override
-		PATCH_FOR_EACH class IN 1 7 10 13 14 17 19 BEGIN
+		//ee中术士被视为法师，无须写19否则双重计算 ???
+		PATCH_FOR_EACH class IN 1 7 10 13 14 17 BEGIN
 			LPF CLONE_EFFECT INT_VAR match_opcode=189 opcode=177 parameter1=class parameter2=5 STR_VAR resource=c4QDC7 END
 		END
 		

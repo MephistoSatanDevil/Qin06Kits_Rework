@@ -1,8 +1,9 @@
-点击查看各职业说明：[简述](README.md) | [战争领主](README-FIGHTER.md) | [白银之手](README-PALADIN.md) | [暗夜猎手](README-THIEF.md) | [自然之心](README-SHAMAN.md)
+[简述](README.md) | [更新历史](CHANGELOG.md) | [战争领主](README-FIGHTER.md) | [白银之手](README-PALADIN.md) | [暗夜猎手](README-THIEF.md) | [自然之心](README-SHAMAN.md)
+
 # QC宗派系列
 
 **作者：c4_angel，qinsisuo06**  
-**版本：1.0**  
+**版本：1.1.0**  
 **支持语言：简体中文**
 
 ## 兼容性及安装说明

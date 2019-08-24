@@ -1,11 +1,11 @@
 BACKUP ~_c4mods_external/c4Q06KitPack/backup~
 AUTHOR ~20829444@qq.com~
 
-VERSION ~v1.0~
+VERSION ~v1.1.0~
 
 AUTO_EVAL_STRINGS
 
-README ~c4Q06KitPack/lang/%LANGUAGE%/readme.pdf~
+README ~c4Q06KitPack/doc/%LANGUAGE%/readme.pdf~
 
 ALWAYS
 
@@ -16,10 +16,12 @@ ALWAYS
 	
 END
 
+///////////////////////////////////////////////////////////////////
+
 LANGUAGE 	~¼òÌåÖÐÎÄ~ 					
 					~schinese~
-					~c4Q06KitPack/lang/schinese/prompts/prompts-%WEIDU_OS%.tra~
 					~c4Q06KitPack/lang/schinese/setup.tra~
+					~c4Q06KitPack/lang/schinese/prompts/prompts-%WEIDU_OS%.tra~
 
 ///////////////////////////////////////////////////////////////////
 
