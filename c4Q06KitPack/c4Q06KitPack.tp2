@@ -26,7 +26,6 @@ LANGUAGE 	~¼òÌåÖÐÎÄ~
 BEGIN @-1	
 DESIGNATED 1
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
-// DEPRECATED ~~
 
 LAF run STR_VAR file=fighter file_loc=fighter END
 
@@ -35,7 +34,7 @@ LAF run STR_VAR file=fighter file_loc=fighter END
 BEGIN @-2	
 DESIGNATED 2
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
-// DEPRECATED ~~
+REQUIRE_PREDICATE NOT FILE_EXISTS_IN_GAME ~c4QDI000.spl~ @-10001
 
 LAF run STR_VAR file=paladin file_loc=paladin END
 
@@ -44,7 +43,6 @@ LAF run STR_VAR file=paladin file_loc=paladin END
 BEGIN @-3
 DESIGNATED 3
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
-// DEPRECATED ~~
 
 LAF run STR_VAR file=thief file_loc=thief END
 
@@ -53,7 +51,6 @@ LAF run STR_VAR file=thief file_loc=thief END
 BEGIN @-4
 DESIGNATED 4
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @-10000
-// DEPRECATED ~~
 
 LAF run STR_VAR file=shaman file_loc=shaman END
 

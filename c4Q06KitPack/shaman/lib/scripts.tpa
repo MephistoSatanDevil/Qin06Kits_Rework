@@ -1,8 +1,8 @@
 
 DEFINE_ACTION_FUNCTION scripts BEGIN
 
-	//终极变形
-	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/observers.baf~
+	COPY ~%SCRIPTS%/restore_skill.baf~ ~%workspace%/observers.baf~
+		//终极变形
 		APPEND_FILE_EVALUATE ~%SCRIPTS%/transform_0.baf~
 		
 	COPY - ~%workspace%/transform_var_hla.2da~ override
@@ -16,7 +16,15 @@ DEFINE_ACTION_FUNCTION scripts BEGIN
 					APPEND_FILE_EVALUATE ~%SCRIPTS%/transform_1.baf~
 			END
 		END
+
+	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/extend.baf~
+		FOR (slot=1;slot<7;++slot) BEGIN
+			APPEND_FILE_EVALUATE ~%workspace%/observers.baf~
+		END
+
+	EXTEND_TOP_REGEXP ~baldur.*\.bcs~ ~%workspace%/extend.baf~
 		
+	/*
 	LAF create_observer STR_VAR name=c4QD conditions=~Kit(Player%slot%,c4Q06Shaman)~ END
 
 	OUTER_FOR (PN=1;PN<7;++PN) BEGIN
@@ -27,5 +35,6 @@ DEFINE_ACTION_FUNCTION scripts BEGIN
 	OUTER_FOR (PN=1;PN<7;++PN) BEGIN
 		EXTEND_BOTTOM_REGEXP ~baldur.*\.bcs~ ~%SCRIPTS%/restore_skill.baf~ EVAL
 	END
+	*/
 
 END

@@ -152,13 +152,15 @@ DEFINE_ACTION_FUNCTION skills BEGIN
 	//变回人形，清除法术，武器，技能
 	COPY ~%SPELLS%/c4QDT00.spl~ override
 		PHP_EACH TRANSFORM_SPELL AS spell => int BEGIN
-			LPF CLONE_EFFECT INT_VAR opcode=112 timing=1 duration=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
-			LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
+			LPF CLONE_EFFECT INT_VAR opcode=112 timing=1 duration=0 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
+			LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
 		END
 		PHP_EACH TRANSFORM_ADD_SKILLS AS spell1 => spell2 BEGIN
 			LPF CLONE_EFFECT INT_VAR opcode=172 timing=1 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=~%spell2%~ END
 			LPF CLONE_EFFECT INT_VAR opcode=206 timing=9 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=~%spell1%~ END
 		END
+		//移除撕碎
+		LPF CLONE_EFFECT INT_VAR opcode=146 timing=1 duration=0 STR_VAR match_resource=SPPOLYMP resource=c4QDIBA4 END
 		SAY 0x08 @101
 		SAY 0x50 @102
 	
@@ -178,11 +180,13 @@ DEFINE_ACTION_FUNCTION skills BEGIN
 					PATCH_IF ~%spell%~ STRING_CONTAINS_REGEXP ~[1-4]%type%~ =0 BEGIN
 						LPF ALTER_SPELL_HEADER STR_VAR icon END
 					END ELSE BEGIN
-						LPF CLONE_EFFECT INT_VAR opcode=112 timing=1 duration=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
-						LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
+						LPF CLONE_EFFECT INT_VAR opcode=112 timing=1 duration=0 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
+						LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=~%spell%~ END
 					END
 				END
 				LPF CLONE_EFFECT INT_VAR opcode=111 duration=360000 STR_VAR match_resource=SPPOLYMP resource=~c4QDT%i%%type%~ END
+				//移除撕碎
+				LPF CLONE_EFFECT INT_VAR opcode=146 timing=1 duration=0 STR_VAR match_resource=SPPOLYMP resource=c4QDIBA4 END
 				SET name=100+tra_ten*10+i
 				SAY 0x08 (AT name)
 				
@@ -219,7 +223,7 @@ DEFINE_ACTION_FUNCTION skills BEGIN
 	
 	// 其他形态移除
 	COPY_EXISTING_REGEXP ~c4QDT[1-4][BC].spl~ override ~c4QDT00.spl~ override
-		LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 STR_VAR match_resource=SPPOLYMP resource=c4QDIA0 insert=first END
+		LPF CLONE_EFFECT INT_VAR opcode=321 duration=0 parameter2=0 STR_VAR match_resource=SPPOLYMP resource=c4QDIA0 insert=first END
 		
 	// 活力
 	OUTER_FOR (i=1;i<5;++i) BEGIN
