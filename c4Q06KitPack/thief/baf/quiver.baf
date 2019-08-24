@@ -1,49 +1,54 @@
 
-// 检测戒指丢失
+// 弹药袋
 IF
-	Kit(Player%PN%,c4Q06Thief)
-	LevelLT(Player%PN%,6)
-	!HasItemEquiped("c4QCQV0",Player%PN%)
+	Kit(Player%slot%,c4Q06Thief)
+	LevelLT(Player%slot%,6)
+	!HasItemEquiped("c4QCQV0",Player%slot%)
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QCQV0",Player%PN%)
+		ReallyForceSpellRES("c4QCQV0",Player%slot%)
+		Continue()
 END
 
 IF
-	Kit(Player%PN%,c4Q06Thief)
-	LevelGT(Player%PN%,5)
-	LevelLT(Player%PN%,12)
-	!HasItemEquiped("c4QCQV1",Player%PN%)
+	Kit(Player%slot%,c4Q06Thief)
+	LevelGT(Player%slot%,5)
+	LevelLT(Player%slot%,12)
+	!HasItemEquiped("c4QCQV1",Player%slot%)
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QCQV1",Player%PN%)
+		ReallyForceSpellRES("c4QCQV1",Player%slot%)
+		Continue()
 END
 
 IF
-	Kit(Player%PN%,c4Q06Thief)
-	LevelGT(Player%PN%,11)
-	LevelLT(Player%PN%,18)
-	!HasItemEquiped("c4QCQV2",Player%PN%)
+	Kit(Player%slot%,c4Q06Thief)
+	LevelGT(Player%slot%,11)
+	LevelLT(Player%slot%,18)
+	!HasItemEquiped("c4QCQV2",Player%slot%)
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QCQV2",Player%PN%)
+		ReallyForceSpellRES("c4QCQV2",Player%slot%)
+		Continue()
 END
 
 IF
-	Kit(Player%PN%,c4Q06Thief)
-	LevelGT(Player%PN%,17)
-	LevelLT(Player%PN%,24)
-	!HasItemEquiped("c4QCQV3",Player%PN%)
+	Kit(Player%slot%,c4Q06Thief)
+	LevelGT(Player%slot%,17)
+	LevelLT(Player%slot%,24)
+	!HasItemEquiped("c4QCQV3",Player%slot%)
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QCQV3",Player%PN%)
+		ReallyForceSpellRES("c4QCQV3",Player%slot%)
+		Continue()
 END
 
 IF
-	Kit(Player%PN%,c4Q06Thief)
-	LevelGT(Player%PN%,23)
-	!HasItemEquiped("c4QCQV4",Player%PN%)
+	Kit(Player%slot%,c4Q06Thief)
+	LevelGT(Player%slot%,23)
+	!HasItemEquiped("c4QCQV4",Player%slot%)
 THEN
 	RESPONSE #100
-		ReallyForceSpellRES("c4QCQV4",Player%PN%)
+		ReallyForceSpellRES("c4QCQV4",Player%slot%)
+		Continue()
 END

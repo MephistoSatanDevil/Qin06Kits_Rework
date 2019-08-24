@@ -54,16 +54,25 @@ DEFINE_ACTION_FUNCTION add_kit BEGIN
 		PRETTY_PRINT_2DA
 	
 	//防兼职, 防物品法术丢失
-	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/observers.baf~
+	COPY ~%SCRIPTS%/recover_skills.baf~ ~%workspace%/observers.baf~
 		APPEND_FILE_EVALUATE ~%SCRIPTS%/apr.baf~
 		APPEND_FILE_EVALUATE ~%SCRIPTS%/quiver.baf~
 		APPEND_FILE_EVALUATE ~%SCRIPTS%/check_multi_class.baf~
+
+	COPY ~.../c4_inlined/blank.baf~ ~%workspace%/extend.baf~
+		FOR (slot=1;slot<7;++slot) BEGIN
+			APPEND_FILE_EVALUATE ~%workspace%/observers.baf~
+		END
+
+	EXTEND_TOP_REGEXP ~baldur.*\.bcs~ ~%workspace%/extend.baf~
 		
+	/*
 	LAF create_observer STR_VAR name=c4QC conditions=~Kit(Player%slot%,c4Q06Thief)~ END
 
 	OUTER_FOR (PN=1;PN<7;++PN) BEGIN
 		EXTEND_BOTTOM ~c4QC%PN%.bcs~ ~%workspace%/observers.baf~ EVAL
 		EXTEND_BOTTOM_REGEXP ~baldur.*\.bcs~ ~%SCRIPTS%/recover_skills.baf~ EVAL
 	END
+	*/
 
 END
