@@ -26,7 +26,7 @@ set ico_folder=%mod_folder%\style
 set audio_folder=%mod_folder%\audio
 set tispack_folder=%mod_folder%\tiz
 set iconv_folder=%mod_folder%\languages\iconv
-set mod_readme=https://trow.cc/board/showforum=29897
+set mod_readme=https://trow.cc/board/showtopic=48322
 
 :: /* 设置为不同系统打包安装文件，设为0表示不打包 */
 set build_windows=1
