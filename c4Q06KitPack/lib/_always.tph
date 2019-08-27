@@ -3,6 +3,14 @@
 ACTION_IF !VARIABLE_IS_SET always_once_section BEGIN
 	OUTER_SET always_once_section = 1
 	
+	ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) BEGIN
+		FAIL @-10002
+	END // Modmerge check
+	
+	ACTION_IF NOT FILE_EXISTS ~data/Patch25.bif~ BEGIN
+		FAIL @-10003
+	END // Game version check
+	
 	OUTER_SPRINT LIBS ~%mod_root%/lib~
 
 	INCLUDE ~%LIBS%/_A7functions.tpa~
